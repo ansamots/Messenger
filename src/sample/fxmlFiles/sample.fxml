@@ -10,8 +10,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.Controller">
 
    <children>
       <Button layoutX="119.0" layoutY="294.0" mnemonicParsing="false" onAction="#logInButton" prefHeight="25.0" prefWidth="85.0" text="Вход" />
@@ -22,5 +21,9 @@
       </Label>
       <Button layoutX="244.0" layoutY="294.0" mnemonicParsing="false" onAction="#settingsButton" prefHeight="25.0" prefWidth="85.0" text="Настройки" />
       <Button layoutX="367.0" layoutY="294.0" mnemonicParsing="false" onAction="#registeredButton" text="Регистрация" />
+      <TextField fx:id="logonField" layoutX="204.0" layoutY="132.0" prefHeight="25.0" prefWidth="255.0" />
+      <PasswordField fx:id="passwordField" layoutX="204.0" layoutY="200.0" prefHeight="25.0" prefWidth="255.0" />
+      <Label layoutX="134.0" layoutY="136.0" text="Login" />
+      <Label layoutX="135.0" layoutY="204.0" text="Password" />
    </children>
 </AnchorPane>
