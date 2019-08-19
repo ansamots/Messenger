@@ -1,7 +1,8 @@
 package sample.controllers;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
@@ -12,21 +13,51 @@ public class Controller {
     @FXML
     private TextField passwordField;
 
-    public void logInButton(ActionEvent actionEvent){
+    @FXML
+    private Label loginStar;
+
+    @FXML
+    private Label passwordStar;
+
+    @FXML
+    private Label informationLg;
+
+    @FXML
+    public void logInButton(){
 
         System.out.println("Press button LogIn");
         String login = logonField.getText();
         String password = passwordField.getText();
-        System.out.println(logonField + " "+ passwordField);
         System.out.println(login + " " + password);
+        if (login.equals("") || password.equals("")){
+            markFields();
+        }else {
+            System.out.println("Пошла проверка");
+            clearFields();
+        }
+
     }
 
-    public void settingsButton(ActionEvent actionEvent) {
+    @FXML
+    public void settingsButton() {
         System.out.println("Press button Settings");
     }
 
-    public void registeredButton(ActionEvent actionEvent) {
+    @FXML
+    public void registeredButton() {
         System.out.println("Press button Regidtered");
+    }
+
+    private void markFields(){
+        loginStar.setText("*");
+        passwordStar.setText("*");
+        informationLg.setText("Введены пустые данные");
+    }
+
+    private void clearFields(){
+        loginStar.setText("");
+        passwordStar.setText("");
+        informationLg.setText("");
     }
 
 }

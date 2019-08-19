@@ -25,5 +25,8 @@
       <PasswordField fx:id="passwordField" layoutX="204.0" layoutY="200.0" prefHeight="25.0" prefWidth="255.0" />
       <Label layoutX="134.0" layoutY="136.0" text="Login" />
       <Label layoutX="135.0" layoutY="204.0" text="Password" />
+      <Label fx:id="loginStar" layoutX="470.0" layoutY="136.0" text=" " textFill="#fc0202" />
+      <Label fx:id="passwordStar" layoutX="470.0" layoutY="204.0" text=" " textFill="#f80202" />
+      <Label fx:id="informationLg" layoutX="204.0" layoutY="249.0" text=" " textFill="#fc0202" />
    </children>
 </AnchorPane>
