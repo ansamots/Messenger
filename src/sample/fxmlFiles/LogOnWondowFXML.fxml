@@ -28,5 +28,6 @@
       <Label fx:id="loginStar" layoutX="470.0" layoutY="136.0" text=" " textFill="#fc0202" />
       <Label fx:id="passwordStar" layoutX="470.0" layoutY="204.0" text=" " textFill="#f80202" />
       <Label fx:id="informationLg" layoutX="204.0" layoutY="249.0" text=" " textFill="#fc0202" />
+      <Label layoutX="259.0" layoutY="75.0" text="ЧУК" />
    </children>
 </AnchorPane>
