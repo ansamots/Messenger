@@ -3,6 +3,7 @@ package sample.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -36,10 +37,14 @@ public class SettingsWindowController {
 
     private boolean saveSettings;
 
+    /**
+     * метод для определения, хочет ли пользователь сохранить настройки сервера или нет
+     */
     public void saveSettingsChBx(ActionEvent actionEvent) {
         if(checkBoxSaveChBx.isSelected() == true){
             saveSettings = true;
             System.out.println(checkBoxSaveChBx.isSelected());
+            ((Node)actionEvent.getSource()).getScene().getWindow().hide();
         }
 
     }
@@ -50,6 +55,11 @@ public class SettingsWindowController {
     public void cancelledButton(ActionEvent actionEvent) {
     }
 
+    /**
+     *
+     * @param actionEvent просто срабатывание метода на нажатие кнопки
+     * Метод нужен для проверки соединения с сервером для указанного IP и порта.
+     */
     public void checkConnectionButton(ActionEvent actionEvent) {
     }
 }
