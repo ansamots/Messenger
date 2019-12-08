@@ -1,45 +1,16 @@
 package sample.controllers;
 
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+
 
 import java.io.IOException;
 
 
-public class LogOnWindowController extends Application {
-
-    /**
-     *  Метод старт запускается после отрабатывания метода launch.
-     *  Здесь рисуется окно для входа в систему
-     * @param primaryStage Сцена для отображения окна входа в сисетму
-     * @throws Exception Нужен для отлавливания исключений если FXML файл небул нйден
-     */
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-//        FXMLLoader loaders = new FXMLLoader();// можно загружать через FXMLLoader
-//        loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml")); // Тогда надо совмещать с 26 строчкой.
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
-//        root = loaders.load(); // Загружать можно и через FXMLLoader.
-//        primaryStage = primaryStage1;
-        primaryStage.setTitle("NeNeMa Systems");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-
-    }
-
-    public void launcher(){ // стандартный метод для запуска JavaFX приложения
-        launch();
-    }
+public class LogOnWindowController {
 
     @FXML
     private TextField logonField; // поле для ввода логина
