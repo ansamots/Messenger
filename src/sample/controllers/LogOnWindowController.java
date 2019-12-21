@@ -2,9 +2,15 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.classes.Main;
 
 
 import java.io.IOException;
@@ -54,8 +60,21 @@ public class LogOnWindowController {
         System.out.println("Press button Settings");
         SettingsWindowController set = new SettingsWindowController();
         try {
-            set.start();
-            ((Node)actionEvent.getSource()).getScene().getWindow().hide(); //Скрываем окно входа в систему
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/sample/fxmlFiles/SettingsWindowFXML.fxml"));
+            Parent root;
+            root = loader.load();
+            Stage settingStage = new Stage();
+            settingStage.setTitle("NeNeMa Systems");
+            settingStage.setScene(new Scene(root));
+            settingStage.initModality(Modality.WINDOW_MODAL);
+            settingStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
+            settingStage.showAndWait();
+            System.out.println("Заработало!)))");
+
+//            Node node = (Node)actionEvent.getSource();
+//            Stage stage = (Stage)node.getScene().getWindow();
+//            stage.hide();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,5 +110,6 @@ public class LogOnWindowController {
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
+
 
 }
