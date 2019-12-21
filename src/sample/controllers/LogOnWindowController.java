@@ -33,6 +33,8 @@ public class LogOnWindowController {
     @FXML
     private Label informationLg; // Иконка информационного сообщения
 
+
+
     /**
      * Метод ля отрабатывания нажатия кнопки Вход
      */
@@ -52,35 +54,19 @@ public class LogOnWindowController {
 
     }
 
+
     /**
      * Метод для отрабатывания нажатия кнопки Настройки
      */
     @FXML
     public void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
         System.out.println("Press button Settings");
-        SettingsWindowController set = new SettingsWindowController();
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("/sample/fxmlFiles/SettingsWindowFXML.fxml"));
-            Parent root;
-            root = loader.load();
-            Stage settingStage = new Stage();
-            settingStage.setTitle("NeNeMa Systems");
-            settingStage.setScene(new Scene(root));
-            settingStage.initModality(Modality.WINDOW_MODAL);
-            settingStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            settingStage.showAndWait();
-            System.out.println("Заработало!)))");
-
-//            Node node = (Node)actionEvent.getSource();
-//            Stage stage = (Stage)node.getScene().getWindow();
-//            stage.hide();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        buttonPressed = ("Settings");// присваиваем переменной значение нажатой кнопки
+        Node node = (Node)actionEvent.getSource();
+        Stage stage = (Stage)node.getScene().getWindow();
+        stage.hide();
     }
+
 
     /**
      * Метод ля отрабатывания нажатия кнопки Регистрация
@@ -108,8 +94,25 @@ public class LogOnWindowController {
         informationLg.setText("Логин и пароль не верны");
     }
 
+
+    /**
+     * возвращием определение нажатой кнопки
+     */
+    public String getButtonPressed() {
+        return buttonPressed;
+    }
+
+    public void setHostIP(String hostIP) {
+        this.hostIP = hostIP;
+    }
+
+    public void setPortNumber(String portNumber){
+        this.portNumber = portNumber;
+    }
+
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
+    private String buttonPressed; // Переменнуя нужна для определения нажатой кнопки
 
 
 }
