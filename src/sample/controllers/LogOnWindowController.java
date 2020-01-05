@@ -112,7 +112,7 @@ public class LogOnWindowController {
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
-    private String buttonPressed; // Переменнуя нужна для определения нажатой кнопки
+    private String buttonPressed; // Переменная нужна для определения нажатой кнопки
 
 
 }
