@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class SettingsWindowController {
 
     @FXML
-    private TextField addressServerl;
+    private TextField addressServer;
 
     @FXML
     private TextField portServer;
@@ -30,7 +30,8 @@ public class SettingsWindowController {
         if(checkBoxSaveChBx.isSelected() == true){
             saveSettings = true;
             System.out.println(checkBoxSaveChBx.isSelected());
-            ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+//            ((Node)actionEvent.getSource()).getScene().getWindow().hide();
+            System.out.println("Настройки будут сохранены");
         }
 
     }
@@ -42,6 +43,7 @@ public class SettingsWindowController {
     }
 
     public void cancelledButton(ActionEvent actionEvent) {
+        ((Node)actionEvent.getSource()).getScene().getWindow().hide();
     }
 
     /**

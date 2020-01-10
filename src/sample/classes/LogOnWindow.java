@@ -18,17 +18,17 @@ public class LogOnWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loaders = new FXMLLoader();
-        loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
-        Parent root = loaders.load();
-        logOnController = loaders.getController();
+            FXMLLoader loaders = new FXMLLoader();
+            loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
+            Parent root = loaders.load();
+            logOnController = loaders.getController();
 
-        stage = new Stage();
-        stage.setTitle("NeNeMa Systems 1");
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+            stage = new Stage();
+            stage.setTitle("NeNeMa Systems 1");
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
 
-        actionWindow();
+            actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
 
 
 
@@ -57,6 +57,7 @@ public class LogOnWindow extends Application {
     private void settings(){
         SettingsWindow settingsWindow = new SettingsWindow(); // запускаем класс для настроек сервера и порта
         settingsWindow.start();
+//        System.out.println(settingsWindow.getParametors());
 
     }
 

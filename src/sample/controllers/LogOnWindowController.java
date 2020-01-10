@@ -62,9 +62,9 @@ public class LogOnWindowController {
     public void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
         System.out.println("Press button Settings");
         buttonPressed = ("Settings");// присваиваем переменной значение нажатой кнопки
-        Node node = (Node)actionEvent.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        stage.hide();
+        Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
+        Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
+        stage.hide(); // Скрываем текущее окно (сцену).
     }
 
 

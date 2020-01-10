@@ -35,6 +35,14 @@ public class SettingsWindow {
 
     }
 
+    public String getParametorIP(){
+        return ip;
+    }
+
+    public String getParametorPort(){
+        return port;
+    }
+
     /**
      * стандартный метод для запуска JavaFX приложения
      */
@@ -43,4 +51,6 @@ public class SettingsWindow {
 //    }
 
     private Stage stage;
+    private String ip;
+    private String port;
 }
