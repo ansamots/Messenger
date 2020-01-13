@@ -19,14 +19,16 @@ public class SettingsWindow {
             loader.setLocation(Main.class.getResource("/sample/fxmlFiles/SettingsWindowFXML.fxml"));
             Parent root;
             root = loader.load();
-            Stage settingStage = new Stage();
-            settingStage.setTitle("NeNeMa Systems");
-            settingStage.setScene(new Scene(root));
+            stageSettings = new Stage();
+            stageSettings.setTitle("NeNeMa Systems");
+            stageSettings.setScene(new Scene(root));
 //            settingStage.initModality(Modality.WINDOW_MODAL);
 //            settingStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
             System.out.println("Окно настроек открыто");
-            settingStage.showAndWait();
+            settingWindowController = loader.getController(); // Получаем ссылку на контроллер, для обращения к его переменным.
+            stageSettings.showAndWait();
             System.out.println("Окно настроек закрыто)");
+//            stageSettings.close();
 
 
         } catch (IOException e) {
@@ -35,11 +37,24 @@ public class SettingsWindow {
 
     }
 
+
+    /**
+     * Получаем значение IP из контолелра прям в методе, что бы не хранить лишних переменных.
+     * Далее возвращаем запросимшему классу значение, Класс служит своего рода прослойкой.
+     * @return
+     */
     public String getParametorIP(){
+        String ip = settingWindowController.getAddressServer();
         return ip;
     }
 
+    /**
+     * Получаем значение парта из контолелра прям в методе, что бы не хранить лишних переменных.
+     * Далее возвращаем запросимшему классу значение, Класс служит своего рода прослойкой.
+     * @return
+     */
     public String getParametorPort(){
+        String port = settingWindowController.getPortServer();
         return port;
     }
 
@@ -50,7 +65,6 @@ public class SettingsWindow {
 //        launch();
 //    }
 
-    private Stage stage;
-    private String ip;
-    private String port;
+    SettingsWindowController settingWindowController;
+    private Stage stageSettings;
 }

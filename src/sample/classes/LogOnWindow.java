@@ -54,10 +54,15 @@ public class LogOnWindow extends Application {
 
     }
 
+    /**
+     * Запускаем класс с окном для ввода адреса и порта сервера.
+     */
     private void settings(){
         SettingsWindow settingsWindow = new SettingsWindow(); // запускаем класс для настроек сервера и порта
         settingsWindow.start();
-//        System.out.println(settingsWindow.getParametors());
+        System.out.println(settingsWindow.getParametorIP());
+        System.out.println(settingsWindow.getParametorPort());
+        stage.showAndWait();
 
     }
 
