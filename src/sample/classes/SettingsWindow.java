@@ -1,13 +1,11 @@
 package sample.classes;
 
-import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.controllers.LogOnWindowController;
+import javafx.stage.WindowEvent;
 import sample.controllers.SettingsWindowController;
 
 import java.io.IOException;
@@ -22,14 +20,17 @@ public class SettingsWindow {
             stageSettings = new Stage();
             stageSettings.setTitle("NeNeMa Systems");
             stageSettings.setScene(new Scene(root));
-//            settingStage.initModality(Modality.WINDOW_MODAL);
-//            settingStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
             System.out.println("Окно настроек открыто");
             settingWindowController = loader.getController(); // Получаем ссылку на контроллер, для обращения к его переменным.
+            stageSettings.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    System.out.println("Закрытие окна настроек - отработано не в контроллере");
+                    exitProgram = true;
+                }
+            });
             stageSettings.showAndWait();
             System.out.println("Окно настроек закрыто)");
-//            stageSettings.close();
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,6 +38,13 @@ public class SettingsWindow {
 
     }
 
+    /**
+     * нетод возваращает булево значение, была ли закрыта программа или нет.
+     * @return
+     */
+    public boolean isExitProgram() {
+        return exitProgram;
+    }
 
     /**
      * Получаем значение IP из контолелра прям в методе, что бы не хранить лишних переменных.
@@ -59,12 +67,22 @@ public class SettingsWindow {
     }
 
     /**
-     * стандартный метод для запуска JavaFX приложения
+     * Получаем значение из контроллера и передаём знчение запросившему классу
+     * Снова класс служит своего рода прослойкой.
+     * @return
+     */
+    public boolean getSaveSettings(){
+        return settingWindowController.getSaveSettings();
+    }
+
+    /**
+     * стандартный метод для запуска JavaFX приложения. Не запускается т.к. работает в одном потоке всё приложение(((
      */
 //    public void launcher(){ // стандартный метод для запуска JavaFX приложения
 //        launch();
 //    }
 
+    private boolean exitProgram;
     SettingsWindowController settingWindowController;
     private Stage stageSettings;
 }

@@ -2,18 +2,12 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.classes.Main;
 
-
-import java.io.IOException;
+import static javafx.scene.paint.Color.GREEN;
 
 
 public class LogOnWindowController {
@@ -33,6 +27,8 @@ public class LogOnWindowController {
     @FXML
     private Label informationLg; // Иконка информационного сообщения
 
+    @FXML
+    private Label ServerAdress; // отображает адрес подключения к серверу
 
 
     /**
@@ -40,7 +36,6 @@ public class LogOnWindowController {
      */
     @FXML
     public void logInButton(){
-
         System.out.println("Press button LogIn");
         String login = logonField.getText();
         String password = passwordField.getText();
@@ -51,9 +46,7 @@ public class LogOnWindowController {
             System.out.println("Пошла проверка");
             clearFields();
         }
-
     }
-
 
     /**
      * Метод для отрабатывания нажатия кнопки Настройки
@@ -67,7 +60,6 @@ public class LogOnWindowController {
         stage.hide(); // Скрываем текущее окно (сцену).
     }
 
-
     /**
      * Метод ля отрабатывания нажатия кнопки Регистрация
      */
@@ -76,24 +68,32 @@ public class LogOnWindowController {
         System.out.println("Press button Regidtered");
     }
 
-    private void markFields(){ //Метод для выделения строк когда они пустые
+    /**
+     * Метод для выделения строк когда они пустые
+     */
+    private void markFields(){
         loginStar.setText("*");
         passwordStar.setText("*");
         informationLg.setText("Введены пустые данные");
     }
 
-    private void clearFields(){// метод для очищения помеченых строк при пустом вводе
+    /**
+     * Метод для очищения помеченых строк при пустом вводе
+     */
+    private void clearFields(){
         loginStar.setText("");
         passwordStar.setText("");
         informationLg.setText("");
     }
 
-    private void errorFields(){ // метод для выделения строк при неверном логине и пароле
+    /**
+     * метод для выделения строк при неверном логине и пароле
+     */
+    private void errorFields(){
         loginStar.setText("*");
         passwordStar.setText("*");
         informationLg.setText("Логин и пароль не верны");
     }
-
 
     /**
      * возвращием определение нажатой кнопки
@@ -102,17 +102,43 @@ public class LogOnWindowController {
         return buttonPressed;
     }
 
+    /**
+     * метод для сбрасывания значения ранее нажатой кнопки
+     * Нужен для того, что бы программа не падала в бесконечный цикл
+     * P.S. - (потом разобраться как обойти эту проблему, скорее всего не правильно изначально залажил
+     *         концепцию разработки с скрыванием окон. Посмотреть в сторону XML для прямого взаимодействия
+     *         с классами.)
+     */
+    public void setButtonPressed(){
+        buttonPressed = "null";
+    }
+
+    /**
+     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
+     * @param hostIP - в этом методе указываем IP или DNS имя сервера.
+     */
     public void setHostIP(String hostIP) {
         this.hostIP = hostIP;
     }
 
+    /**
+     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
+     * @param portNumber - в этом методе указываем порт сервера.
+     */
     public void setPortNumber(String portNumber){
         this.portNumber = portNumber;
+    }
+
+    /**
+     * Отрисоввываем на главном окне адрес подключения к серверу.
+     */
+    public void drawServerAdress(){
+        ServerAdress.setText(hostIP+":"+portNumber);
+        ServerAdress.setTextFill(GREEN);
     }
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
     private String buttonPressed; // Переменная нужна для определения нажатой кнопки
-
 
 }

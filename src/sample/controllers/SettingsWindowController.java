@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class SettingsWindowController {
+public class SettingsWindowController<event> {
 
     @FXML
     private TextField addressServer;
@@ -68,6 +68,14 @@ public class SettingsWindowController {
     public String getPortServer() {
         String port = portServer.getText();
         return port;
+    }
+
+    /**
+     *
+     * @return Возвращаем значение false если не надо сохранять настройки и true если надо.
+     */
+    public boolean getSaveSettings(){
+        return checkBoxSaveChBx.isSelected();
     }
 
     /**

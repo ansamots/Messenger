@@ -22,17 +22,29 @@ public class LogOnWindow extends Application {
             loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
             Parent root = loaders.load();
             logOnController = loaders.getController();
-
             stage = new Stage();
             stage.setTitle("NeNeMa Systems 1");
             stage.setScene(new Scene(root));
+            exsistsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
             stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
+            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на кремтик, то программа вываливается в ошибку
+                                                             // проверка - это решение.
+                actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
+            }
 
-            actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
+    }
 
-
-
-
+    /**
+     * Метод проверяет, существует ли файл с настройками для подключения к серверу
+     * если такой файл есть, то передаёт данные для отображения в окне
+     */
+    private void exsistsSettings(){
+        SaveSettingsClient check = new SaveSettingsClient();
+        if(check.isFileExists()){
+            logOnController.setHostIP(check.getIP());
+            logOnController.setPortNumber(check.getPort());
+            logOnController.drawServerAdress();
+        }
     }
 
     /**
@@ -42,11 +54,17 @@ public class LogOnWindow extends Application {
     private void actionWindow(){
         controllerAnswer = logOnController.getButtonPressed();
         if(controllerAnswer.equals("Login")){
+            logOnController.setButtonPressed();
             login();
         }else if(controllerAnswer.equals("Settings")){
+            logOnController.setButtonPressed();
             settings();
-        }else {
+        }else if (controllerAnswer.equals("Register")) {
+            logOnController.setButtonPressed();
             register();
+        }else {
+            System.out.println("завершение программы - из цикла");
+            stage.close();
         }
     }
 
@@ -60,12 +78,21 @@ public class LogOnWindow extends Application {
     private void settings(){
         SettingsWindow settingsWindow = new SettingsWindow(); // запускаем класс для настроек сервера и порта
         settingsWindow.start();
-        System.out.println(settingsWindow.getParametorIP());
-        System.out.println(settingsWindow.getParametorPort());
-        stage.showAndWait();
-
+        if(!settingsWindow.isExitProgram()){ // Возвращает true когда программа закрыта, поэтому стоит отрицание - !
+            logOnController.setHostIP(settingsWindow.getParametorIP());
+            logOnController.setPortNumber(settingsWindow.getParametorPort());
+            logOnController.drawServerAdress();
+            if(settingsWindow.getSaveSettings()){
+                new SaveSettingsClient(settingsWindow.getParametorIP(), settingsWindow.getParametorPort());
+            }
+            stage.showAndWait(); // показвааем окно входа в систему снова.
+            actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
+        }
     }
 
+    /**
+     * метод отображает web форму для регистрации в приложении.
+     */
     private void register(){
 
     }
