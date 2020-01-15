@@ -25,24 +25,23 @@ public class LogOnWindow extends Application {
             stage = new Stage();
             stage.setTitle("NeNeMa Systems 1");
             stage.setScene(new Scene(root));
-            exsistsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
+            existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
             stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
             if (logOnController.getButtonPressed() != null){ // Если сразу нажать на кремтик, то программа вываливается в ошибку
                                                              // проверка - это решение.
                 actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
             }
-
     }
 
     /**
      * Метод проверяет, существует ли файл с настройками для подключения к серверу
      * если такой файл есть, то передаёт данные для отображения в окне
      */
-    private void exsistsSettings(){
-        SaveSettingsClient check = new SaveSettingsClient();
-        if(check.isFileExists()){
-            logOnController.setHostIP(check.getIP());
-            logOnController.setPortNumber(check.getPort());
+    private void existsSettings(){
+        SaveSettingsClient setClient = new SaveSettingsClient();
+        if(setClient.isFileExists()){
+            logOnController.setHostIP(setClient.getIP());
+            logOnController.setPortNumber(setClient.getPort());
             logOnController.drawServerAdress();
         }
     }
@@ -63,13 +62,20 @@ public class LogOnWindow extends Application {
             logOnController.setButtonPressed();
             register();
         }else {
-            System.out.println("завершение программы - из цикла");
+//            System.out.println("завершение программы - из цикла");
             stage.close();
         }
     }
 
+    /**
+     * Запускаем метод для входа в систему, с проверкой логина и пароля на сервере.
+     */
     private void login(){
-
+        ConnectServer conServ = new ConnectServer(logOnController.getHostIP(), logOnController.getPortNumber(), logOnController.getLogin(),
+                                                  logOnController.getPassword());
+        if(conServ.results()){
+            
+        }
     }
 
     /**
@@ -103,7 +109,6 @@ public class LogOnWindow extends Application {
     public void launcher(){
         launch();
     }
-
 
     LogOnWindowController logOnController; // Экземпляр контроллера
 

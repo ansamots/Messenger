@@ -35,7 +35,7 @@ public class LogOnWindowController {
      * Метод ля отрабатывания нажатия кнопки Вход
      */
     @FXML
-    public void logInButton(){
+    private void logInButton(){
         System.out.println("Press button LogIn");
         String login = logonField.getText();
         String password = passwordField.getText();
@@ -52,7 +52,7 @@ public class LogOnWindowController {
      * Метод для отрабатывания нажатия кнопки Настройки
      */
     @FXML
-    public void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
+    private void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
         System.out.println("Press button Settings");
         buttonPressed = ("Settings");// присваиваем переменной значение нажатой кнопки
         Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
@@ -64,8 +64,8 @@ public class LogOnWindowController {
      * Метод ля отрабатывания нажатия кнопки Регистрация
      */
     @FXML
-    public void registeredButton() {
-        System.out.println("Press button Regidtered");
+    private void registeredButton() {
+        System.out.println("Press button Registered");
     }
 
     /**
@@ -121,6 +121,10 @@ public class LogOnWindowController {
         this.hostIP = hostIP;
     }
 
+    public String getHostIP(){
+        return hostIP;
+    }
+
     /**
      * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
      * @param portNumber - в этом методе указываем порт сервера.
@@ -129,12 +133,24 @@ public class LogOnWindowController {
         this.portNumber = portNumber;
     }
 
+    public String getPortNumber(){
+        return portNumber;
+    }
+
     /**
      * Отрисоввываем на главном окне адрес подключения к серверу.
      */
     public void drawServerAdress(){
         ServerAdress.setText(hostIP+":"+portNumber);
         ServerAdress.setTextFill(GREEN);
+    }
+
+    public String getLogin(){
+        return logonField.getText();
+    }
+
+    public String getPassword(){
+        return passwordField.getText();
     }
 
     private String hostIP; // Адрес Сервера подклчения
