@@ -8,5 +8,5 @@ public class ConnectServer {
     public boolean results(){
         return result;
     }
-    private boolean result;
+    private boolean result;//тест
 }
