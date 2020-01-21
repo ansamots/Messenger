@@ -1,6 +1,6 @@
 package sample.classes;
 
-public class ConnectServer {
+public class ConnectServer extends Thread{
     /**
      * Контроллер для проверки проверки доступности сервера
      * @param ip
@@ -32,7 +32,7 @@ public class ConnectServer {
      */
     private void startLogin(){
         checkingAvailabilityServer();
-        if(result){
+        if(resultAvaliableServer){
 
         }else {
             
@@ -52,12 +52,18 @@ public class ConnectServer {
      * @return
      */
     public boolean results(){
-        return result;
+        return resultAvaliableServer;
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        System.out.println("Паралельный поток");
     }
 
     private String ip;
     private String port;
     private String login;
     private String password;
-    private boolean result;
+    private boolean resultAvaliableServer;
 }

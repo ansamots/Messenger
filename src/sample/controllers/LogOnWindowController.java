@@ -35,16 +35,18 @@ public class LogOnWindowController {
      * Метод ля отрабатывания нажатия кнопки Вход
      */
     @FXML
-    private void logInButton(){
-        System.out.println("Press button LogIn");
+    private void logInButton(ActionEvent actionEvent){
         String login = logonField.getText();
         String password = passwordField.getText();
         System.out.println(login + " " + password);
         if (login.equals("") || password.equals("")){ // если поля пустыа то выводим надпись
             markFields(); // здесь метод вывода надписи
         }else {
-            System.out.println("Пошла проверка");
             clearFields();
+            buttonPressed = ("Login");// присваиваем переменной значение нажатой кнопки
+            Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
+            Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
+            stage.hide(); // Скрываем текущее окно (сцену).
         }
     }
 

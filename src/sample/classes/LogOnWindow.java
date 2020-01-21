@@ -17,7 +17,8 @@ public class LogOnWindow extends Application {
      */
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
+        try{
             FXMLLoader loaders = new FXMLLoader();
             loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
             Parent root = loaders.load();
@@ -28,9 +29,13 @@ public class LogOnWindow extends Application {
             existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
             stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
             if (logOnController.getButtonPressed() != null){ // Если сразу нажать на кремтик, то программа вываливается в ошибку
-                                                             // проверка - это решение.
+                // проверка - это решение.
                 actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
             }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 
     /**
@@ -54,6 +59,7 @@ public class LogOnWindow extends Application {
         controllerAnswer = logOnController.getButtonPressed();
         if(controllerAnswer.equals("Login")){
             logOnController.setButtonPressed();
+            System.out.println("Отработала кнопка логин");
             login();
         }else if(controllerAnswer.equals("Settings")){
             logOnController.setButtonPressed();
@@ -73,6 +79,11 @@ public class LogOnWindow extends Application {
     private void login(){
         ConnectServer conServ = new ConnectServer(logOnController.getHostIP(), logOnController.getPortNumber(), logOnController.getLogin(),
                                                   logOnController.getPassword());
+        conServ.start();
+        System.out.println("Отработал метод логин");
+        stage.showAndWait(); // показвааем окно входа в систему снова.
+//        controllerAnswer.
+        actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
         if(conServ.results()){
             
         }
