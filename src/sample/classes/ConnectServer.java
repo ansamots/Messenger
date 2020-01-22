@@ -43,7 +43,7 @@ public class ConnectServer extends Thread{
      * Метод ля проверки связи с сервером по указанным параметрам
      */
     private void checkingAvailabilityServer(){
-
+        
     }
 
     /**
@@ -63,6 +63,7 @@ public class ConnectServer extends Thread{
 
     private String ip;
     private String port;
+
     private String login;
     private String password;
     private boolean resultAvaliableServer;
