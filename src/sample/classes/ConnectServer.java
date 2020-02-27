@@ -40,10 +40,14 @@ public class ConnectServer extends Thread{
     }
 
     /**
-     * Метод ля проверки связи с сервером по указанным параметрам
+     * Метод для проверки связи с сервером по указанным параметрам
      */
-    private void checkingAvailabilityServer(){
-        
+    private boolean checkingAvailabilityServer(){
+        if (true){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**
