@@ -2,7 +2,7 @@ package sample.classes;
 
 public class ConnectServer extends Thread{
     /**
-     * Контроллер для проверки проверки доступности сервера
+     * Конструктор для проверки проверки доступности сервера
      * @param ip
      * @param port
      */
@@ -13,7 +13,7 @@ public class ConnectServer extends Thread{
     }
 
     /**
-     * Контроллер используется для авторизации в системе.
+     * Конструктор используется для авторизации в системе.
      * @param ip
      * @param port
      * @param login
@@ -42,11 +42,11 @@ public class ConnectServer extends Thread{
     /**
      * Метод для проверки связи с сервером по указанным параметрам
      */
-    private boolean checkingAvailabilityServer(){
+    private void checkingAvailabilityServer(){
         if (true){
-            return true;
+            resultAvaliableServer = true;
         }else {
-            return false;
+            resultAvaliableServer = false;
         }
     }
 
