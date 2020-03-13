@@ -84,7 +84,7 @@ public class LogOnWindow extends Application {
         stage.showAndWait(); // показвааем окно входа в систему снова.
 //        controllerAnswer.
         actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
-        if(conServ.results()){
+        if(conServ.results()){// Заготовка под основное окно, если логин на сервере прошёл успешно.
             
         }
     }
