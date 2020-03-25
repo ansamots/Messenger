@@ -1,5 +1,8 @@
 package sample.controllers;
 
+import interfaces.Mediator;
+import interfaces.Notifying;
+import interfaces.implementation.NotifyingImplementation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -10,7 +13,10 @@ import javafx.stage.Stage;
 import static javafx.scene.paint.Color.GREEN;
 
 
-public class LogOnWindowController {
+public class LogOnWindowController extends NotifyingImplementation {
+    public LogOnWindowController(Mediator mediator){
+        super();
+    }
 
     @FXML
     private TextField logonField; // поле для ввода логина
@@ -159,4 +165,13 @@ public class LogOnWindowController {
     private String portNumber; //Порт сервера подключения
     private String buttonPressed; // Переменная нужна для определения нажатой кнопки
 
+    @Override
+    public void addMessage(String message) {
+
+    }
+
+    @Override
+    public void setMessage(String message) {
+
+    }
 }

@@ -4,12 +4,18 @@ import interfaces.Mediator;
 import interfaces.Notifying;
 
 public abstract class NotifyingImplementation implements Notifying {
-    NotifyingImplementation(Mediator mediator){
-
+    public Mediator mediator;
+    /**
+     * В конструкторе класса указываем ссылку на Медиатора и сообщае ему о своём существовании.
+     * @param mediator
+     */
+    public NotifyingImplementation(Mediator mediator){
+        this.mediator = mediator;
+        mediator.addUsers(this);
     }
 
     /**
-     * Метод ля отправления уведомлений медиатору.
+     * Метод для отправления уведомлений медиатору.
      */
     public void addMessage() {
 

@@ -1,5 +1,7 @@
 package sample.classes;
 
+import interfaces.Mediator;
+import interfaces.Notifying;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +30,7 @@ public class LogOnWindow extends Application {
             stage.setScene(new Scene(root));
             existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
             stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
-            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на кремтик, то программа вываливается в ошибку
+            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на креcтик, то программа вываливается в ошибку
                 // проверка - это решение.
                 actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
             }
@@ -58,6 +60,7 @@ public class LogOnWindow extends Application {
     private void actionWindow(){
         controllerAnswer = logOnController.getButtonPressed();
         if(controllerAnswer.equals("Login")){
+//            addMessage("Login Mediator");
             logOnController.setButtonPressed();
             System.out.println("Отработала кнопка логин");
             login();
@@ -126,4 +129,18 @@ public class LogOnWindow extends Application {
     private String controllerAnswer; // переменная для отрабатывания методов нажатия кнопок в контроллере
     private String classesAnswer; // переменная получает ответ из других классов для передачи ответа в контроллер
     private Stage stage; // Вынели Stage в класс для управлением скрытия и появления окна
+
+    /**
+     * Уведомляем медиатора.
+     */
+//    public void addMessage(String message) {
+//        mediator.notifyUsers(message);
+//    }
+
+    /**
+     * Получаем сообщение от медиатора.
+     */
+//    public void setMessage(String message) {
+//        System.out.println(message);
+//    }
 }
