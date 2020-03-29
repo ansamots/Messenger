@@ -6,6 +6,21 @@ import interfaces.Notifying;
 import java.util.ArrayList;
 
 public class MediarotImplementation implements Mediator {
+    private static Mediator mediator;
+
+    private MediarotImplementation(){
+    }
+
+    /**
+     * Реализуем класс Одиночку через статический метод и приватный конструктор.
+     */
+    public static Mediator getMediator() {
+        if (mediator == null){
+            mediator = new MediarotImplementation();
+        }
+        return mediator;
+    }
+
     /**
      * при помощи этго метода мы сможем уведомлять те классы, которым это сообщение
      * предназначено.

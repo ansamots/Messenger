@@ -2,6 +2,7 @@ package sample.controllers;
 
 import interfaces.Mediator;
 import interfaces.Notifying;
+import interfaces.implementation.MediarotImplementation;
 import interfaces.implementation.NotifyingImplementation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +15,11 @@ import static javafx.scene.paint.Color.GREEN;
 
 
 public class LogOnWindowController extends NotifyingImplementation {
-    public LogOnWindowController(Mediator mediator){
-        super();
+//    private Mediator mediator;
+    public LogOnWindowController(){
+        super(MediarotImplementation.getMediator());
+//        mediator = MediarotImplementation.getMediator();
+
     }
 
     @FXML
@@ -167,7 +171,7 @@ public class LogOnWindowController extends NotifyingImplementation {
 
     @Override
     public void addMessage(String message) {
-
+        mediator.notifyUsers(message);
     }
 
     @Override
