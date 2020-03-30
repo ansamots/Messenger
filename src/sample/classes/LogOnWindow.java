@@ -29,11 +29,12 @@ public class LogOnWindow extends Application {
             stage.setTitle("NeNeMa Systems 1");
             stage.setScene(new Scene(root));
             existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
-            stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
-            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на креcтик, то программа вываливается в ошибку
-                // проверка - это решение.
-                actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
-            }
+//            stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
+            stage.show(); // Показываем окно.
+//            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на креcтик, то программа вываливается в ошибку
+//                // проверка - это решение.
+//                actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классеКонструкторе была нажата
+//            }
         }catch (Exception e){
             System.out.println(e);
         }

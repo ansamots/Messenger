@@ -18,7 +18,7 @@ public class LogOnWindowController extends NotifyingImplementation {
 //    private Mediator mediator;
     public LogOnWindowController(){
         super(MediarotImplementation.getMediator());
-//        mediator = MediarotImplementation.getMediator();
+        mediator.addUsers(this);
 
     }
 
@@ -53,10 +53,11 @@ public class LogOnWindowController extends NotifyingImplementation {
             markFields(); // здесь метод вывода надписи
         }else {
             clearFields();
+            mediator.notifyUsers("Нажата кнопка Логина."); //Передаём медиатору сообщение о нажатой кнопке
             buttonPressed = ("Login");// присваиваем переменной значение нажатой кнопки
             Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
             Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
-            stage.hide(); // Скрываем текущее окно (сцену).
+//            stage.hide(); // Скрываем текущее окно (сцену).
         }
     }
 
@@ -169,13 +170,17 @@ public class LogOnWindowController extends NotifyingImplementation {
     private String portNumber; //Порт сервера подключения
     private String buttonPressed; // Переменная нужна для определения нажатой кнопки
 
-    @Override
+    /**
+     * Уведомляем медиатора.
+     */
     public void addMessage(String message) {
         mediator.notifyUsers(message);
     }
 
-    @Override
+    /**
+     * Получаем сообщение от медиатора.
+     */
     public void setMessage(String message) {
-
+        System.out.println("Получено сообщение от Медиатора: "+message);
     }
 }
