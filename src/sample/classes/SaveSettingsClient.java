@@ -9,7 +9,7 @@ public class SaveSettingsClient {
     /**
      * КОнструктор без параметров вызывается для определения есть ли файл с настройками или нет.
      */
-    SaveSettingsClient(){
+    public SaveSettingsClient(){
         readFile();
     }
 

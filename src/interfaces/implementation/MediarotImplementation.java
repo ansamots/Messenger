@@ -27,7 +27,7 @@ public class MediarotImplementation implements Mediator {
      */
     public void notifyUsers(String message) {
         System.out.println("Получено сообщение: "+message);
-        for (int a = 0; a < notifyingArrayListist.size(); a++){
+        for (int a = 0; a < notifyingArrayListist.size()-1; a++){
             System.out.println(notifyingArrayListist.get(a));
             Notifying n = notifyingArrayListist.get(a);
             n.setMessage(message);

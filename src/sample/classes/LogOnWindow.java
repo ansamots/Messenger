@@ -28,7 +28,7 @@ public class LogOnWindow extends Application {
             stage = new Stage();
             stage.setTitle("NeNeMa Systems 1");
             stage.setScene(new Scene(root));
-            existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
+//            existsSettings(); // Предварительная проверка на сохранённые настройки для полключение к серверу
 //            stage.showAndWait(); //Ожидаем, пока окно открыто, дальше код не выполняется.
             stage.show(); // Показываем окно.
 //            if (logOnController.getButtonPressed() != null){ // Если сразу нажать на креcтик, то программа вываливается в ошибку
@@ -41,75 +41,75 @@ public class LogOnWindow extends Application {
 
     }
 
-    /**
-     * Метод проверяет, существует ли файл с настройками для подключения к серверу
-     * если такой файл есть, то передаёт данные для отображения в окне
-     */
-    private void existsSettings(){
-        SaveSettingsClient setClient = new SaveSettingsClient();
-        if(setClient.isFileExists()){
-            logOnController.setHostIP(setClient.getIP());
-            logOnController.setPortNumber(setClient.getPort());
-            logOnController.drawServerAdress();
-        }
-    }
+//    /**
+//     * Метод проверяет, существует ли файл с настройками для подключения к серверу
+//     * если такой файл есть, то передаёт данные для отображения в окне
+//     */
+//    private void existsSettings(){
+//        SaveSettingsClient setClient = new SaveSettingsClient();
+//        if(setClient.isFileExists()){
+//            logOnController.setHostIP(setClient.getIP());
+//            logOnController.setPortNumber(setClient.getPort());
+//            logOnController.drawServerAdress();
+//        }
+//    }
 
     /**
      * Метод нужен для отрабатывания дальнейших действие необходимых при логине
      * Он отрабатывает на снове полученого через геттер значения String из контроллера mainController
      */
-    private void actionWindow(){
-        controllerAnswer = logOnController.getButtonPressed();
-        if(controllerAnswer.equals("Login")){
-//            addMessage("Login Mediator");
-            logOnController.setButtonPressed();
-            System.out.println("Отработала кнопка логин");
-            login();
-        }else if(controllerAnswer.equals("Settings")){
-            logOnController.setButtonPressed();
-            settings();
-        }else if (controllerAnswer.equals("Register")) {
-            logOnController.setButtonPressed();
-            register();
-        }else {
-//            System.out.println("завершение программы - из цикла");
-            stage.close();
-        }
-    }
+//    private void actionWindow(){
+//        controllerAnswer = logOnController.getButtonPressed();
+//        if(controllerAnswer.equals("Login")){
+////            addMessage("Login Mediator");
+//            logOnController.setButtonPressed();
+//            System.out.println("Отработала кнопка логин");
+//            login();
+//        }else if(controllerAnswer.equals("Settings")){
+//            logOnController.setButtonPressed();
+//            settings();
+//        }else if (controllerAnswer.equals("Register")) {
+//            logOnController.setButtonPressed();
+//            register();
+//        }else {
+////            System.out.println("завершение программы - из цикла");
+//            stage.close();
+//        }
+//    }
 
-    /**
-     * Запускаем метод для входа в систему, с проверкой логина и пароля на сервере.
-     */
-    private void login(){
-        ConnectServer conServ = new ConnectServer(logOnController.getHostIP(), logOnController.getPortNumber(), logOnController.getLogin(),
-                                                  logOnController.getPassword());
-        conServ.start();
-        System.out.println("Отработал метод логин");
-        stage.showAndWait(); // показвааем окно входа в систему снова.
-//        controllerAnswer.
-        actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
-        if(conServ.results()){// Заготовка под основное окно, если логин на сервере прошёл успешно.
-            
-        }
-    }
+//    /**
+//     * Запускаем метод для входа в систему, с проверкой логина и пароля на сервере.
+//     */
+//    private void login(){
+//        ConnectServer conServ = new ConnectServer(logOnController.getHostIP(), logOnController.getPortNumber(), logOnController.getLogin(),
+//                                                  logOnController.getPassword());
+//        conServ.start();
+//        System.out.println("Отработал метод логин");
+//        stage.showAndWait(); // показвааем окно входа в систему снова.
+////        controllerAnswer.
+//        actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
+//        if(conServ.results()){// Заготовка под основное окно, если логин на сервере прошёл успешно.
+//
+//        }
+//    }
 
-    /**
-     * Запускаем класс с окном для ввода адреса и порта сервера.
-     */
-    private void settings(){
-        SettingsWindow settingsWindow = new SettingsWindow(); // запускаем класс для настроек сервера и порта
-        settingsWindow.start();
-        if(!settingsWindow.isExitProgram()){ // Возвращает true когда программа закрыта, поэтому стоит отрицание - !
-            logOnController.setHostIP(settingsWindow.getParametorIP());
-            logOnController.setPortNumber(settingsWindow.getParametorPort());
-            logOnController.drawServerAdress();
-            if(settingsWindow.getSaveSettings()){
-                new SaveSettingsClient(settingsWindow.getParametorIP(), settingsWindow.getParametorPort());
-            }
-            stage.showAndWait(); // показвааем окно входа в систему снова.
-            actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
-        }
-    }
+//    /**
+//     * Запускаем класс с окном для ввода адреса и порта сервера.
+//     */
+//    private void settings(){
+//        SettingsWindow settingsWindow = new SettingsWindow(); // запускаем класс для настроек сервера и порта
+//        settingsWindow.start();
+//        if(!settingsWindow.isExitProgram()){ // Возвращает true когда программа закрыта, поэтому стоит отрицание - !
+//            logOnController.setHostIP(settingsWindow.getParametorIP());
+//            logOnController.setPortNumber(settingsWindow.getParametorPort());
+//            logOnController.drawServerAdress();
+//            if(settingsWindow.getSaveSettings()){
+//                new SaveSettingsClient(settingsWindow.getParametorIP(), settingsWindow.getParametorPort());
+//            }
+//            stage.showAndWait(); // показвааем окно входа в систему снова.
+//            actionWindow(); // Запускаем метод, который опредиляет, какая кнопка в классе Контроллере была нажата
+//        }
+//    }
 
     /**
      * метод отображает web форму для регистрации в приложении.

@@ -10,16 +10,30 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.classes.SaveSettingsClient;
 
 import static javafx.scene.paint.Color.GREEN;
 
 
 public class LogOnWindowController extends NotifyingImplementation {
-//    private Mediator mediator;
     public LogOnWindowController(){
         super(MediarotImplementation.getMediator());
         mediator.addUsers(this);
+//        existsSettings();
 
+    }
+
+    /**
+     * Метод проверяет, существует ли файл с настройками для подключения к серверу
+     * если такой файл есть, то передаёт данные для отображения в окне
+     */
+    private void existsSettings(){
+        SaveSettingsClient setClient = new SaveSettingsClient();
+        if(setClient.isFileExists()){
+            hostIP = setClient.getIP();
+            portNumber = setClient.getPort();
+            drawServerAdress();
+        }
     }
 
     @FXML
@@ -108,23 +122,23 @@ public class LogOnWindowController extends NotifyingImplementation {
         informationLg.setText("Логин и пароль не верны");
     }
 
-    /**
-     * возвращием определение нажатой кнопки
-     */
-    public String getButtonPressed() {
-        return buttonPressed;
-    }
+//    /**
+//     * возвращием определение нажатой кнопки
+//     */
+//    public String getButtonPressed() {
+//        return buttonPressed;
+//    }
 
-    /**
-     * метод для сбрасывания значения ранее нажатой кнопки
-     * Нужен для того, что бы программа не падала в бесконечный цикл
-     * P.S. - (потом разобраться как обойти эту проблему, скорее всего не правильно изначально залажил
-     *         концепцию разработки с скрыванием окон. Посмотреть в сторону XML для прямого взаимодействия
-     *         с классами.)
-     */
-    public void setButtonPressed(){
-        buttonPressed = "null";
-    }
+//    /**
+//     * метод для сбрасывания значения ранее нажатой кнопки
+//     * Нужен для того, что бы программа не падала в бесконечный цикл
+//     * P.S. - (потом разобраться как обойти эту проблему, скорее всего не правильно изначально залажил
+//     *         концепцию разработки с скрыванием окон. Посмотреть в сторону XML для прямого взаимодействия
+//     *         с классами.)
+//     */
+//    public void setButtonPressed(){
+//        buttonPressed = "null";
+//    }
 
     /**
      * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
@@ -138,17 +152,17 @@ public class LogOnWindowController extends NotifyingImplementation {
         return hostIP;
     }
 
-    /**
-     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
-     * @param portNumber - в этом методе указываем порт сервера.
-     */
-    public void setPortNumber(String portNumber){
-        this.portNumber = portNumber;
-    }
-
-    public String getPortNumber(){
-        return portNumber;
-    }
+//    /**
+//     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
+//     * @param portNumber - в этом методе указываем порт сервера.
+//     */
+//    public void setPortNumber(String portNumber){
+//        this.portNumber = portNumber;
+//    }
+//
+//    public String getPortNumber(){
+//        return portNumber;
+//    }
 
     /**
      * Отрисоввываем на главном окне адрес подключения к серверу.
@@ -166,10 +180,6 @@ public class LogOnWindowController extends NotifyingImplementation {
         return passwordField.getText();
     }
 
-    private String hostIP; // Адрес Сервера подклчения
-    private String portNumber; //Порт сервера подключения
-    private String buttonPressed; // Переменная нужна для определения нажатой кнопки
-
     /**
      * Уведомляем медиатора.
      */
@@ -183,4 +193,8 @@ public class LogOnWindowController extends NotifyingImplementation {
     public void setMessage(String message) {
         System.out.println("Получено сообщение от Медиатора: "+message);
     }
+
+    private String hostIP; // Адрес Сервера подклчения
+    private String portNumber; //Порт сервера подключения
+    private String buttonPressed; // Переменная нужна для определения нажатой кнопки
 }
