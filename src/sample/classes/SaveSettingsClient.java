@@ -13,7 +13,7 @@ public class SaveSettingsClient {
         readFile();
     }
 
-    SaveSettingsClient(String ip, String port){
+    public SaveSettingsClient(String ip, String port){
         this.ip = ip;
         this.port = port;
         writeFile();

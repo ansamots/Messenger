@@ -140,17 +140,17 @@ public class LogOnWindowController extends NotifyingImplementation {
 //        buttonPressed = "null";
 //    }
 
-    /**
-     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
-     * @param hostIP - в этом методе указываем IP или DNS имя сервера.
-     */
-    public void setHostIP(String hostIP) {
-        this.hostIP = hostIP;
-    }
-
-    public String getHostIP(){
-        return hostIP;
-    }
+//    /**
+//     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
+//     * @param hostIP - в этом методе указываем IP или DNS имя сервера.
+//     */
+//    public void setHostIP(String hostIP) {
+//        this.hostIP = hostIP;
+//    }
+//
+//    public String getHostIP(){
+//        return hostIP;
+//    }
 
 //    /**
 //     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
@@ -172,13 +172,13 @@ public class LogOnWindowController extends NotifyingImplementation {
         ServerAdress.setTextFill(GREEN);
     }
 
-    public String getLogin(){
-        return logonField.getText();
-    }
-
-    public String getPassword(){
-        return passwordField.getText();
-    }
+//    public String getLogin(){
+//        return logonField.getText();
+//    }
+//
+//    public String getPassword(){
+//        return passwordField.getText();
+//    }
 
     /**
      * Уведомляем медиатора.

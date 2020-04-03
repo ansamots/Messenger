@@ -24,7 +24,7 @@ public class LogOnWindow extends Application {
             FXMLLoader loaders = new FXMLLoader();
             loaders.setLocation(Main.class.getResource("/sample/fxmlFiles/LogOnWondowFXML.fxml"));
             Parent root = loaders.load();
-            logOnController = loaders.getController();
+//            logOnController = loaders.getController();
             stage = new Stage();
             stage.setTitle("NeNeMa Systems 1");
             stage.setScene(new Scene(root));
@@ -125,7 +125,7 @@ public class LogOnWindow extends Application {
         launch();
     }
 
-    LogOnWindowController logOnController; // Экземпляр контроллера
+//    LogOnWindowController logOnController; // Экземпляр контроллера
 
     private String controllerAnswer; // переменная для отрабатывания методов нажатия кнопок в контроллере
     private String classesAnswer; // переменная получает ответ из других классов для передачи ответа в контроллер
