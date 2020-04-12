@@ -16,24 +16,12 @@ import static javafx.scene.paint.Color.GREEN;
 
 
 public class LogOnWindowController extends NotifyingImplementation {
+    /**
+     * В конструкторе отправляем ссылку на себя тем самым регистрируемся в медиаторе.
+     */
     public LogOnWindowController(){
         super(MediarotImplementation.getMediator());
         mediator.addUsers(this);
-//        existsSettings();
-
-    }
-
-    /**
-     * Метод проверяет, существует ли файл с настройками для подключения к серверу
-     * если такой файл есть, то передаёт данные для отображения в окне
-     */
-    private void existsSettings(){
-        SaveSettingsClient setClient = new SaveSettingsClient();
-        if(setClient.isFileExists()){
-            hostIP = setClient.getIP();
-            portNumber = setClient.getPort();
-            drawServerAdress();
-        }
     }
 
     @FXML
@@ -67,8 +55,7 @@ public class LogOnWindowController extends NotifyingImplementation {
             markFields(); // здесь метод вывода надписи
         }else {
             clearFields();
-            mediator.notifyUsers("Нажата кнопка Логина."); //Передаём медиатору сообщение о нажатой кнопке
-            buttonPressed = ("Login");// присваиваем переменной значение нажатой кнопки
+            addMessage("login");
             Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
             Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
 //            stage.hide(); // Скрываем текущее окно (сцену).
@@ -80,8 +67,7 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     @FXML
     private void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
-        System.out.println("Press button Settings");
-        buttonPressed = ("Settings");// присваиваем переменной значение нажатой кнопки
+        mediator.notifyUsers("Settings"); //Передаём медиатору сообщение о нажатой кнопке
         Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
         Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
         stage.hide(); // Скрываем текущее окно (сцену).
@@ -104,6 +90,19 @@ public class LogOnWindowController extends NotifyingImplementation {
     @FXML
     private void initialize(){
         existsSettings();
+    }
+
+    /**
+     * Метод проверяет, существует ли файл с настройками для подключения к серверу
+     * если такой файл есть, то передаёт данные для отображения в окне
+     */
+    private void existsSettings(){
+        SaveSettingsClient setClient = new SaveSettingsClient();
+        if(setClient.isFileExists()){
+            hostIP = setClient.getIP();
+            portNumber = setClient.getPort();
+            drawServerAdress();
+        }
     }
 
     /**
@@ -133,47 +132,6 @@ public class LogOnWindowController extends NotifyingImplementation {
         informationLg.setText("Логин и пароль не верны");
     }
 
-//    /**
-//     * возвращием определение нажатой кнопки
-//     */
-//    public String getButtonPressed() {
-//        return buttonPressed;
-//    }
-
-//    /**
-//     * метод для сбрасывания значения ранее нажатой кнопки
-//     * Нужен для того, что бы программа не падала в бесконечный цикл
-//     * P.S. - (потом разобраться как обойти эту проблему, скорее всего не правильно изначально залажил
-//     *         концепцию разработки с скрыванием окон. Посмотреть в сторону XML для прямого взаимодействия
-//     *         с классами.)
-//     */
-//    public void setButtonPressed(){
-//        buttonPressed = "null";
-//    }
-
-//    /**
-//     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
-//     * @param hostIP - в этом методе указываем IP или DNS имя сервера.
-//     */
-//    public void setHostIP(String hostIP) {
-//        this.hostIP = hostIP;
-//    }
-//
-//    public String getHostIP(){
-//        return hostIP;
-//    }
-
-//    /**
-//     * метод нужен для того, что бы видеть в стартовом окне, к какому серверу идёт подключение
-//     * @param portNumber - в этом методе указываем порт сервера.
-//     */
-//    public void setPortNumber(String portNumber){
-//        this.portNumber = portNumber;
-//    }
-//
-//    public String getPortNumber(){
-//        return portNumber;
-//    }
 
     /**
      * Отрисоввываем на главном окне адрес подключения к серверу.
@@ -183,20 +141,6 @@ public class LogOnWindowController extends NotifyingImplementation {
         ServerAdress.setTextFill(GREEN);
     }
 
-//    public String getLogin(){
-//        return logonField.getText();
-//    }
-//
-//    public String getPassword(){
-//        return passwordField.getText();
-//    }
-
-    /**
-     * Уведомляем медиатора.
-     */
-    public void addMessage(String message) {
-        mediator.notifyUsers(message);
-    }
 
     /**
      * Получаем сообщение от медиатора.
