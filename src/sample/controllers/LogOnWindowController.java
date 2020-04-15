@@ -21,7 +21,6 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     public LogOnWindowController(){
         super(MediarotImplementation.getMediator());
-        mediator.addUsers(this);
     }
 
     @FXML
@@ -55,7 +54,7 @@ public class LogOnWindowController extends NotifyingImplementation {
             markFields(); // здесь метод вывода надписи
         }else {
             clearFields();
-            addMessage("login");
+            addMessage("Login");
             Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
             Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
 //            stage.hide(); // Скрываем текущее окно (сцену).
@@ -67,7 +66,7 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     @FXML
     private void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
-        mediator.notifyUsers("Settings"); //Передаём медиатору сообщение о нажатой кнопке
+        addMessage("Settings"); //Передаём медиатору сообщение о нажатой кнопке
         Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
         Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
         stage.hide(); // Скрываем текущее окно (сцену).
@@ -141,13 +140,38 @@ public class LogOnWindowController extends NotifyingImplementation {
         ServerAdress.setTextFill(GREEN);
     }
 
+    /**
+     * Геттер для логина
+     */
+    public String getHostLogin() {
+        return logonField.getText();
+    }
+
+    /**
+     * Геттер для пароля
+     */
+    public String getHostPassword() {
+        return passwordField.getText();
+    }
+
+    public String getHostIP(){
+        return hostIP;
+    }
+
+    public String getPortNumber(){
+        return portNumber;
+    }
 
     /**
      * Получаем сообщение от медиатора.
      */
     public void setMessage(String message) {
         System.out.println("Получено сообщение от Медиатора: "+message);
+        if(message.equals("true")){
+            deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
+        }
     }
+
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения

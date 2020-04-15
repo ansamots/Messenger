@@ -6,7 +6,7 @@ public class ConnectServer extends Thread{
      * @param ip
      * @param port
      */
-    ConnectServer(String ip, String port){
+    public ConnectServer(String ip, String port){
         this.ip = ip;
         this.port = port;
         checkingAvailabilityServer();
@@ -19,7 +19,7 @@ public class ConnectServer extends Thread{
      * @param login
      * @param password
      */
-    ConnectServer(String ip, String port, String login, String password){
+    public ConnectServer(String ip, String port, String login, String password){
         this.ip = ip;
         this.port = port;
         this.login = login;
@@ -63,6 +63,19 @@ public class ConnectServer extends Thread{
     public void run() {
         super.run();
         System.out.println("Паралельный поток");
+        testPrint();
+    }
+
+    private void testPrint(){
+        try {
+            sleep(10000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println(ip);
+        System.out.println(port);
+        System.out.println(login);
+        System.out.println(password);
     }
 
     private String ip;

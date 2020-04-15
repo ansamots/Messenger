@@ -18,7 +18,14 @@ public abstract class NotifyingImplementation implements Notifying {
      * Метод для отправления уведомлений медиатору.
      */
     public void addMessage(String message) {
-        mediator.notifyUsers(message);
+        mediator.notifyUsers(this, message);
+    }
+
+    /**
+     * Удаление самого себя из медиатора
+     */
+    public void deleteMe(){
+        mediator.deleteUsers(this);
     }
 
 }

@@ -2,6 +2,8 @@ package interfaces.implementation;
 
 import interfaces.Mediator;
 import interfaces.Notifying;
+import sample.classes.ConnectServer;
+import sample.controllers.LogOnWindowController;
 
 import java.util.ArrayList;
 
@@ -25,13 +27,22 @@ public class MediarotImplementation implements Mediator {
      * при помощи этго метода мы сможем уведомлять те классы, которым это сообщение
      * предназначено.
      */
-    public void notifyUsers(String message) {
+    public void notifyUsers(Notifying notifying, String message) {
         System.out.println("Получено сообщение: "+message);
-        for (int a = 0; a < notifyingArrayListist.size()-1; a++){
-            System.out.println(notifyingArrayListist.get(a));
-            Notifying n = notifyingArrayListist.get(a);
-            n.setMessage(message);
+        if(notifying instanceof LogOnWindowController){
+            if(message == "Login"){
+                LogOnWindowController log = (LogOnWindowController) notifying;
+                ConnectServer con = new ConnectServer(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                Thread conThread = new Thread(con);
+                conThread.start();
+            }
         }
+
+//        for (int a = 0; a < notifyingArrayListist.size(); a++){
+//            System.out.println(notifyingArrayListist.get(a));
+//            Notifying n = notifyingArrayListist.get(a);
+//            n.setMessage(message);
+//        }
     }
 
     /**
