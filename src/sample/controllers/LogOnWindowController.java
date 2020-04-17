@@ -170,6 +170,9 @@ public class LogOnWindowController extends NotifyingImplementation {
         if(message.equals("true")){
             deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
         }
+        if(message.equals("false")){
+            errorFields();
+        }
     }
 
 

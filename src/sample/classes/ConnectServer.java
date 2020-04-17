@@ -1,6 +1,15 @@
 package sample.classes;
 
-public class ConnectServer extends Thread{
+import interfaces.Mediator;
+import interfaces.Notifying;
+import interfaces.implementation.MediarotImplementation;
+
+public class ConnectServer extends Thread implements Notifying {
+
+    public ConnectServer(){
+
+    }
+
     /**
      * Конструктор для проверки проверки доступности сервера
      * @param ip
@@ -24,7 +33,8 @@ public class ConnectServer extends Thread{
         this.port = port;
         this.login = login;
         this.password = password;
-        startLogin();
+        mediator = MediarotImplementation.getMediator();
+        mediator.addUsers(this);
     }
 
     /**
@@ -76,6 +86,7 @@ public class ConnectServer extends Thread{
         System.out.println(port);
         System.out.println(login);
         System.out.println(password);
+        mediator.notifyUsers(this,"false");
     }
 
     private String ip;
@@ -84,4 +95,21 @@ public class ConnectServer extends Thread{
     private String login;
     private String password;
     private boolean resultAvaliableServer;
+
+    @Override
+    public void addMessage(String message) {
+
+    }
+
+    @Override
+    public void setMessage(String message) {
+
+    }
+
+    @Override
+    public void deleteMe() {
+
+
+    }
+    public Mediator mediator;
 }

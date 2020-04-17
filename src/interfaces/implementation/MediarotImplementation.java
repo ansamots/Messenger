@@ -38,11 +38,12 @@ public class MediarotImplementation implements Mediator {
             }
         }
 
-//        for (int a = 0; a < notifyingArrayListist.size(); a++){
-//            System.out.println(notifyingArrayListist.get(a));
-//            Notifying n = notifyingArrayListist.get(a);
-//            n.setMessage(message);
-//        }
+        if(notifying instanceof ConnectServer){
+            for (Notifying n: notifyingArrayListist)
+                if(n instanceof LogOnWindowController){
+                    n.setMessage(message);
+                }
+        }
     }
 
     /**
