@@ -20,7 +20,7 @@ public class LogOnWindowController extends NotifyingImplementation {
      * В конструкторе отправляем ссылку на себя тем самым регистрируемся в медиаторе.
      */
     public LogOnWindowController(){
-        super(MediarotImplementation.getMediator());
+        super();
     }
 
     @FXML

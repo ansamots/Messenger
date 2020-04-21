@@ -7,10 +7,9 @@ public abstract class NotifyingImplementation implements Notifying {
     public Mediator mediator;
     /**
      * В конструкторе класса указываем ссылку на Медиатора и сообщае ему о своём существовании.
-     * @param mediator
      */
-    public NotifyingImplementation(Mediator mediator){
-        this.mediator = mediator;
+    public NotifyingImplementation(){
+        mediator = MediarotImplementation.getMediator();
         mediator.addUsers(this);
     }
 
