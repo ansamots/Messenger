@@ -1,21 +1,22 @@
 package sample.classes;
 
 import interfaces.Mediator;
-import interfaces.Notifying;
-import interfaces.implementation.MediarotImplementation;
+import interfaces.implementation.NotifyingImplementation;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 
-public class ConnectServer extends Thread implements Notifying {
 
-    public ConnectServer(){
+public class ConnectServer extends NotifyingImplementation {
 
-    }
 
     /**
+     *
      * Конструктор для проверки проверки доступности сервера
      * @param ip
      * @param port
      */
     public ConnectServer(String ip, String port){
+        super();
         this.ip = ip;
         this.port = port;
         checkingAvailabilityServer();
@@ -29,18 +30,17 @@ public class ConnectServer extends Thread implements Notifying {
      * @param password
      */
     public ConnectServer(String ip, String port, String login, String password){
+        super();
         this.ip = ip;
         this.port = port;
         this.login = login;
         this.password = password;
-        mediator = MediarotImplementation.getMediator();
-        mediator.addUsers(this);
     }
 
     /**
      * Метод для авторизации в системе по указанным параметрам
      */
-    private void startLogin(){
+    public void startLogin(){
         checkingAvailabilityServer();
         if(resultAvaliableServer){
 
@@ -52,7 +52,15 @@ public class ConnectServer extends Thread implements Notifying {
     /**
      * Метод для проверки связи с сервером по указанным параметрам
      */
-    private void checkingAvailabilityServer(){
+    public void checkingAvailabilityServer(){
+        conector = new Conector();
+        conector.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                System.out.println("Ответ паралельного потока: "+ event.getSource().getValue());
+            }
+        });
+        conector.start();
         if (true){
             resultAvaliableServer = true;
         }else {
@@ -69,19 +77,10 @@ public class ConnectServer extends Thread implements Notifying {
         return resultAvaliableServer;
     }
 
-    @Override
-    public void run() {
-        super.run();
-        System.out.println("Паралельный поток");
-        testPrint();
-    }
+
+
 
     private void testPrint(){
-        try {
-            sleep(10000);
-        }catch (Exception e){
-            System.out.println(e);
-        }
         System.out.println(ip);
         System.out.println(port);
         System.out.println(login);
@@ -89,12 +88,14 @@ public class ConnectServer extends Thread implements Notifying {
         mediator.notifyUsers(this,"false");
     }
 
+
     private String ip;
     private String port;
 
     private String login;
     private String password;
     private boolean resultAvaliableServer;
+    Conector conector;
 
     @Override
     public void addMessage(String message) {

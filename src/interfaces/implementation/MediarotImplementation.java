@@ -33,8 +33,7 @@ public class MediarotImplementation implements Mediator {
             if(message == "Login"){
                 LogOnWindowController log = (LogOnWindowController) notifying;
                 ConnectServer con = new ConnectServer(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
-                Thread conThread = new Thread(con);
-                conThread.start();
+                con.startLogin();
             }
         }
 
