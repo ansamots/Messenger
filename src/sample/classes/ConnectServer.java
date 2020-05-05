@@ -1,6 +1,5 @@
 package sample.classes;
 
-import interfaces.Mediator;
 import interfaces.implementation.NotifyingImplementation;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -19,7 +18,6 @@ public class ConnectServer extends NotifyingImplementation {
         super();
         this.ip = ip;
         this.port = port;
-        checkingAvailabilityServer();
     }
 
     /**
@@ -58,6 +56,7 @@ public class ConnectServer extends NotifyingImplementation {
             @Override
             public void handle(WorkerStateEvent event) {
                 System.out.println("Ответ паралельного потока: "+ event.getSource().getValue());
+                addMessage("true");
             }
         });
         conector.start();
@@ -85,7 +84,7 @@ public class ConnectServer extends NotifyingImplementation {
         System.out.println(port);
         System.out.println(login);
         System.out.println(password);
-        mediator.notifyUsers(this,"false");
+//        mediator.notifyUsers(this,"false");
     }
 
 
@@ -98,19 +97,24 @@ public class ConnectServer extends NotifyingImplementation {
     Conector conector;
 
     @Override
-    public void addMessage(String message) {
-
-    }
-
-    @Override
     public void setMessage(String message) {
 
     }
 
-    @Override
-    public void deleteMe() {
-
-
-    }
-    public Mediator mediator;
+//    @Override
+//    public void addMessage(String message) {
+//
+//    }
+//
+//    @Override
+//    public void setMessage(String message) {
+//
+//    }
+//
+//    @Override
+//    public void deleteMe() {
+//
+//
+//    }
+//    public Mediator mediator;
 }

@@ -1,8 +1,6 @@
 package sample.controllers;
 
-import interfaces.Mediator;
-import interfaces.Notifying;
-import interfaces.implementation.MediarotImplementation;
+
 import interfaces.implementation.NotifyingImplementation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.classes.SaveSettingsClient;
 
-import static javafx.scene.paint.Color.GREEN;
+//import static javafx.scene.paint.Color.GREEN;
 
 
 public class LogOnWindowController extends NotifyingImplementation {
@@ -111,6 +109,7 @@ public class LogOnWindowController extends NotifyingImplementation {
         loginStar.setText("*");
         passwordStar.setText("*");
         informationLg.setText("Введены пустые данные");
+        informationLg.setStyle("-fx-text-fill: RED");
     }
 
     /**
@@ -129,6 +128,16 @@ public class LogOnWindowController extends NotifyingImplementation {
         loginStar.setText("*");
         passwordStar.setText("*");
         informationLg.setText("Логин и пароль не верны");
+        informationLg.setStyle("-fx-text-fill: RED");
+    }
+
+    /**
+     * тестовый метод на отображение в окне входа
+     */
+    private void testFields(){
+        informationLg.setText("Вход выполнен");
+        informationLg.setStyle("-fx-text-fill: GREEN");
+
     }
 
 
@@ -137,7 +146,7 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     public void drawServerAdress(){
         ServerAdress.setText(hostIP+":"+portNumber);
-        ServerAdress.setTextFill(GREEN);
+        ServerAdress.setStyle("-fx-text-fill: GREEN");
     }
 
     /**
@@ -168,7 +177,8 @@ public class LogOnWindowController extends NotifyingImplementation {
     public void setMessage(String message) {
         System.out.println("Получено сообщение от Медиатора: "+message);
         if(message.equals("true")){
-            deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
+            testFields();
+//            deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
         }
         if(message.equals("false")){
             errorFields();
