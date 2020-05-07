@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import interfaces.implementation.NotifyingImplementation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -8,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class SettingsWindowController<event> {
+public class SettingsWindowController extends NotifyingImplementation {
 
     @FXML
     private TextField addressServer;
@@ -84,5 +85,10 @@ public class SettingsWindowController<event> {
      * Метод нужен для проверки соединения с сервером для указанного IP и порта.
      */
     public void checkConnectionButton(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void setMessage(String message) {
+
     }
 }

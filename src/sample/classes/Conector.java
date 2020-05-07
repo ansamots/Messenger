@@ -12,7 +12,7 @@ public class Conector extends Service<String> {
             protected String call() throws Exception {
                 try {
                     System.out.println("Concurrent thread fell asleep");
-                    Thread.sleep(10000);
+                    Thread.sleep(2000);
                     System.out.println("Concurrent thread awake");
 //                    return "Паралельный поток прошёл успешно!";??
                 }catch(Exception e){

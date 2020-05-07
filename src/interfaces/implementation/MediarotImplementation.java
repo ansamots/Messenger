@@ -3,6 +3,7 @@ package interfaces.implementation;
 import interfaces.Mediator;
 import interfaces.Notifying;
 import sample.classes.ConnectServer;
+import sample.classes.SettingsWindow;
 import sample.controllers.LogOnWindowController;
 
 import java.util.ArrayList;
@@ -35,6 +36,11 @@ public class MediarotImplementation implements Mediator {
                 ConnectServer con = new ConnectServer(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
                 con.startLogin();
             }
+
+            if(message == "Settings"){
+                SettingsWindow set = new SettingsWindow();
+                set.start();
+            }
         }
 
         if(notifying instanceof ConnectServer){
@@ -43,6 +49,8 @@ public class MediarotImplementation implements Mediator {
                     n.setMessage(message);
                 }
         }
+
+
     }
 
     /**
