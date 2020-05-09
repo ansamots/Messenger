@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.classes.SaveSettingsClient;
 
-//import static javafx.scene.paint.Color.GREEN;
-
 
 public class LogOnWindowController extends NotifyingImplementation {
     /**
@@ -53,9 +51,6 @@ public class LogOnWindowController extends NotifyingImplementation {
         }else {
             clearFields();
             addMessage("Login");
-            Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
-            Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
-//            stage.hide(); // Скрываем текущее окно (сцену).
         }
     }
 
@@ -64,10 +59,10 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     @FXML
     private void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
-        addMessage("Settings"); //Передаём медиатору сообщение о нажатой кнопке
         Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
         Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
         stage.hide(); // Скрываем текущее окно (сцену).
+        addMessage("Settings"); //Передаём медиатору сообщение о нажатой кнопке
     }
 
     /**
@@ -75,7 +70,7 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     @FXML
     private void registeredButton() {
-        System.out.println("Press button Registered");
+        System.out.println("Registered");
     }
 
     /**
@@ -188,5 +183,4 @@ public class LogOnWindowController extends NotifyingImplementation {
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
-    private String buttonPressed; // Переменная нужна для определения нажатой кнопки
 }

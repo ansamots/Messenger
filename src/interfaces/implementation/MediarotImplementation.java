@@ -30,19 +30,37 @@ public class MediarotImplementation implements Mediator {
      */
     public void notifyUsers(Notifying notifying, String message) {
         System.out.println("Получено сообщение: "+message);
+
+        /**
+         * Определяем, если сообщение поступило от окна входа в систему, то обрабатываем его методы
+         */
         if(notifying instanceof LogOnWindowController){
             if(message == "Login"){
                 LogOnWindowController log = (LogOnWindowController) notifying;
-                ConnectServer con = new ConnectServer(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
-                con.startLogin();
+                for (Notifying n: notifyingArrayListist){
+                    if(n instanceof ConnectServer){
+                        ConnectServer con = (ConnectServer) n;
+                        con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                    }else{
+                        ConnectServer con = new ConnectServer();
+                        con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                    }
+                }
             }
 
             if(message == "Settings"){
                 SettingsWindow set = new SettingsWindow();
                 set.start();
             }
+
+            if (message == "Registered"){
+                System.out.println("Класс регистрации ещё не реализован");
+            }
         }
 
+        /**
+         * Проверяем, если ответ пришёл от класса соединения с сервером то обрабатываем его методы
+         */
         if(notifying instanceof ConnectServer){
             for (Notifying n: notifyingArrayListist)
                 if(n instanceof LogOnWindowController){

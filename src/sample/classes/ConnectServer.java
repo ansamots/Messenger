@@ -7,39 +7,22 @@ import javafx.event.EventHandler;
 
 public class ConnectServer extends NotifyingImplementation {
 
-
     /**
-     *
-     * Конструктор для проверки проверки доступности сервера
-     * @param ip
-     * @param port
+     * Конструктор используется для добавления в медиатор.
      */
-    public ConnectServer(String ip, String port){
+    public ConnectServer(){
         super();
-        this.ip = ip;
-        this.port = port;
-    }
-
-    /**
-     * Конструктор используется для авторизации в системе.
-     * @param ip
-     * @param port
-     * @param login
-     * @param password
-     */
-    public ConnectServer(String ip, String port, String login, String password){
-        super();
-        this.ip = ip;
-        this.port = port;
-        this.login = login;
-        this.password = password;
     }
 
     /**
      * Метод для авторизации в системе по указанным параметрам
      */
-    public void startLogin(){
-        checkingAvailabilityServer();
+    public void startLogin(String ip, String port, String login, String password){
+        this.ip = ip;
+        this.port = port;
+        this.login = login;
+        this.password = password;
+        checkingAvailabilityServer(ip, port);
         if(resultAvaliableServer){
 
         }else {
@@ -50,8 +33,8 @@ public class ConnectServer extends NotifyingImplementation {
     /**
      * Метод для проверки связи с сервером по указанным параметрам
      */
-    public void checkingAvailabilityServer(){
-        conector = new Conector();
+    public void checkingAvailabilityServer(String ip, String port){
+        conector = new Connector();
         conector.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
@@ -94,7 +77,7 @@ public class ConnectServer extends NotifyingImplementation {
     private String login;
     private String password;
     private boolean resultAvaliableServer;
-    Conector conector;
+    Connector conector;
 
     @Override
     public void setMessage(String message) {

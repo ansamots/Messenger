@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.classes.SaveSettingsClient;
 
 
 public class SettingsWindowController extends NotifyingImplementation {
@@ -29,7 +30,6 @@ public class SettingsWindowController extends NotifyingImplementation {
         if(checkBoxSaveChBx.isSelected() == true){
             saveSettings = true;
             System.out.println(checkBoxSaveChBx.isSelected());
-//            ((Node)actionEvent.getSource()).getScene().getWindow().hide();
             System.out.println("Настройки будут сохранены");
         }
 
@@ -40,9 +40,18 @@ public class SettingsWindowController extends NotifyingImplementation {
      * @param actionEvent
      */
     public void saveButton(ActionEvent actionEvent) {
+        if (checkBoxSaveChBx.isSelected()){
+            SaveSettingsClient svCl = new SaveSettingsClient(addressServer.getText(), portServer.getText());
+
+        }else{
+            //можно реализовать через геттеры и сеттеры, что бы настройки не сохронялись в файле
+            // но на данный момент не имеет особого смысла - программа учебная
+            SaveSettingsClient svCl = new SaveSettingsClient(addressServer.getText(), portServer.getText());
+        }
         Node node = (Node)actionEvent.getSource();
         Stage stage = (Stage)node.getScene().getWindow();
         stage.hide();
+        deleteMe();
     }
 
     /**
@@ -51,32 +60,7 @@ public class SettingsWindowController extends NotifyingImplementation {
      */
     public void cancelledButton(ActionEvent actionEvent) {
         ((Node)actionEvent.getSource()).getScene().getWindow().hide();
-    }
-
-    /**
-     *
-     * @return Возвращаем стринговое значение адреса сервера, через точку или ДНС имя.
-     */
-    public String getAddressServer() {
-        String adrServ = addressServer.getText();
-        return adrServ;
-    }
-
-    /**
-     *
-     * @return Возвращаем стринговое значение порта сервера подключения.
-     */
-    public String getPortServer() {
-        String port = portServer.getText();
-        return port;
-    }
-
-    /**
-     *
-     * @return Возвращаем значение false если не надо сохранять настройки и true если надо.
-     */
-    public boolean getSaveSettings(){
-        return checkBoxSaveChBx.isSelected();
+        deleteMe();
     }
 
     /**
@@ -89,6 +73,5 @@ public class SettingsWindowController extends NotifyingImplementation {
 
     @Override
     public void setMessage(String message) {
-
     }
 }
