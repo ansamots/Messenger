@@ -12,13 +12,13 @@ public class Connector {
     public static void main(String[] args){
         System.out.println("Server started");
         ServerSocket serv; // Создаём серверный сокет с указанием порта который будет использовать программа.
-        Socket socket;
+        Socket socket; // и обычный сокет для общения с клиентами
         serverList = new LinkedList<>();
         dataStore = new DataStory();
         try {
-            serv = new ServerSocket(8081); // сервеный порт, выставляем на каком порту будет происходить прослуша
-            while(true){// помещаем в бесконечный чыкл, для прослушки портотв.
-                socket = serv.accept(); // сокет нкжен для прослушки порта
+            serv = new ServerSocket(5000); // сервеный порт, выставляем на каком порту будет происходить прослуша
+            while(true){// помещаем в бесконечный цыкл, для прослушки портотв.
+                socket = serv.accept(); // сокет нкжен для прослушки порта, метод accept нужен для блокироки программы.
                 try {
                     serverList.add(new ServerProcessing(socket)); // добавляем в список новое соединение, передаём сокет для нового потока
                 }catch(Exception e){

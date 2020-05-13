@@ -4,6 +4,9 @@ package sample.classes;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Connector extends Service<String> {
@@ -12,8 +15,16 @@ public class Connector extends Service<String> {
         return new Task<String>() {
             @Override
             protected String call() throws Exception {
+                Socket connectServer = new Socket("127.0.0.1", 5000); //создаём сокет подключения к серверу.
+
+                InputStreamReader streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
+                BufferedReader bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+                String message = bufferedReader.readLine(); // читаем данные в готовом виде из буфера.
+
+                PrintWriter writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(soccet));
+
                 try {
-                    Socket connectServer = new Socket();
+
                     System.out.println("Concurrent thread fell asleep");
                     Thread.sleep(2000);
                     System.out.println("Concurrent thread awake");
@@ -25,4 +36,7 @@ public class Connector extends Service<String> {
             }
         };
     }
+    private String returneMethod(String m){
+        return m;
+    };
 }
