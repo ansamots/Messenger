@@ -22,9 +22,9 @@ public class Connector extends Service<String> {
                 String message = bufferedReader.readLine(); // читаем данные в готовом виде из буфера.
 
                 PrintWriter writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(soccet));
+//                writer.println("");
 
                 try {
-
                     System.out.println("Concurrent thread fell asleep");
                     Thread.sleep(2000);
                     System.out.println("Concurrent thread awake");
