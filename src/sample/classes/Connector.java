@@ -21,7 +21,9 @@ public class Connector extends Service<String> {
                 InputStreamReader streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
                 BufferedReader bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
                 writer.println("Проверка соединения");
+                System.out.println("Верх строки");
                 String message = bufferedReader.readLine(); // читаем данные в готовом виде из буфера.
+                System.out.println("Низ строки");
                 try {
                     System.out.println("Concurrent thread fell asleep");
                     Thread.sleep(2000);

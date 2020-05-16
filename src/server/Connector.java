@@ -24,6 +24,7 @@ public class Connector {
                     String s = "Клиент прошёл проверку";
                     PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
                     System.out.println("Проверка клиента пройдена");
+                    Thread.sleep(1000);
                     printWriter.println("Проверка клиента пройдена");
                 }catch(Exception e){
                     socket.close(); // если что-то пошло не так, закрываем сокет.
