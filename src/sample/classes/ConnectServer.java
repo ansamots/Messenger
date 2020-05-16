@@ -34,15 +34,17 @@ public class ConnectServer extends NotifyingImplementation {
      * Метод для проверки связи с сервером по указанным параметрам
      */
     public void checkingAvailabilityServer(String ip, String port){
-        conector = new Connector();
-        conector.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+        if (connector == null){ //Проверяем, создан ли уже класс коннектор
+            connector = new Connector();
+        }
+        connector.setOnSucceeded(new EventHandler<WorkerStateEvent>() { // запускаем паралельный поток в при помощи Service
             @Override
             public void handle(WorkerStateEvent event) {
                 System.out.println("Ответ паралельного потока: "+ event.getSource().getValue());
                 addMessage("true");
             }
         });
-        conector.start();
+        connector.start();
         if (true){
             resultAvaliableServer = true;
         }else {
@@ -76,8 +78,8 @@ public class ConnectServer extends NotifyingImplementation {
 
     private String login;
     private String password;
-    private boolean resultAvaliableServer;
-    Connector conector;
+    private boolean resultAvaliableServer = false;
+    Connector connector = null;
 
     @Override
     public void setMessage(String message) {

@@ -17,13 +17,11 @@ public class Connector extends Service<String> {
             protected String call() throws Exception {
                 Socket connectServer = new Socket("127.0.0.1", 5000); //создаём сокет подключения к серверу.
 
+                PrintWriter writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(soccet));
                 InputStreamReader streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
                 BufferedReader bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+                writer.println("Проверка соединения");
                 String message = bufferedReader.readLine(); // читаем данные в готовом виде из буфера.
-
-                PrintWriter writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(soccet));
-//                writer.println("");
-
                 try {
                     System.out.println("Concurrent thread fell asleep");
                     Thread.sleep(2000);
@@ -32,7 +30,7 @@ public class Connector extends Service<String> {
                 }catch(Exception e){
                     System.out.println(e);
                 }
-                return "Паралельный поток прошёл успешно!";
+                return message;
             }
         };
     }
