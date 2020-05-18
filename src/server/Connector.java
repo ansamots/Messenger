@@ -21,11 +21,10 @@ public class Connector {
                 socket = serv.accept(); // сокет нкжен для прослушки порта, метод accept нужен для блокироки программы.
                 try {
                     serverList.add(new ServerProcessing(socket)); // добавляем в список новое соединение, передаём сокет для нового потока
-                    String s = "Клиент прошёл проверку";
-                    PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-                    System.out.println("Проверка клиента пройдена");
+                    PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
                     Thread.sleep(1000);
                     printWriter.println("Проверка клиента пройдена");
+                    printWriter.println("Проверка пройдена 2");
                 }catch(Exception e){
                     socket.close(); // если что-то пошло не так, закрываем сокет.
                     serv.close();

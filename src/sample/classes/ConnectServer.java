@@ -12,6 +12,7 @@ public class ConnectServer extends NotifyingImplementation {
      */
     public ConnectServer(){
         super();
+        connector = new Connector();
     }
 
     /**
@@ -22,11 +23,12 @@ public class ConnectServer extends NotifyingImplementation {
         this.port = port;
         this.login = login;
         this.password = password;
-        checkingAvailabilityServer(ip, port);
         if(resultAvaliableServer){
-
+            System.out.println("Страрт-логин истина");
+            checkingAvailabilityServer(ip, port);
         }else {
-            
+            System.out.println("Страрт-логин лож");
+            checkingAvailabilityServer(ip, port);
         }
     }
 
@@ -34,22 +36,27 @@ public class ConnectServer extends NotifyingImplementation {
      * Метод для проверки связи с сервером по указанным параметрам
      */
     public void checkingAvailabilityServer(String ip, String port){
-        if (connector == null){ //Проверяем, создан ли уже класс коннектор
-            connector = new Connector();
-        }
+        connector.checkAvaliable(ip, port);
         connector.setOnSucceeded(new EventHandler<WorkerStateEvent>() { // запускаем паралельный поток в при помощи Service
             @Override
             public void handle(WorkerStateEvent event) {
                 System.out.println("Ответ паралельного потока: "+ event.getSource().getValue());
-                addMessage("true");
+                addMessage((String)event.getSource().getValue());
+//                connector.restart();
+                if((String)event.getSource().getValue() == "true"){
+                    resultAvaliableServer = true;
+                }else if((String)event.getSource().getValue() == "false"){
+                    resultAvaliableServer = false;
+                }
             }
         });
-        connector.start();
-        if (true){
-            resultAvaliableServer = true;
-        }else {
-            resultAvaliableServer = false;
+        if(startingCheck){
+            connector.restart();
+        }else{
+            connector.start();
+            startingCheck = true;
         }
+
     }
 
     /**
@@ -61,17 +68,7 @@ public class ConnectServer extends NotifyingImplementation {
         return resultAvaliableServer;
     }
 
-
-
-
-    private void testPrint(){
-        System.out.println(ip);
-        System.out.println(port);
-        System.out.println(login);
-        System.out.println(password);
-//        mediator.notifyUsers(this,"false");
-    }
-
+    private boolean startingCheck = false; // Переменная нужна для контроля разового старта коннектора.
 
     private String ip;
     private String port;
@@ -85,21 +82,4 @@ public class ConnectServer extends NotifyingImplementation {
     public void setMessage(String message) {
 
     }
-
-//    @Override
-//    public void addMessage(String message) {
-//
-//    }
-//
-//    @Override
-//    public void setMessage(String message) {
-//
-//    }
-//
-//    @Override
-//    public void deleteMe() {
-//
-//
-//    }
-//    public Mediator mediator;
 }
