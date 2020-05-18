@@ -43,7 +43,7 @@ public class MediarotImplementation implements Mediator {
                     if(notifyingArrayListist.get(n-1) instanceof ConnectServer){
                         ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
                         con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
-                    }else{
+                    }else if(n == length){
                         ConnectServer con = new ConnectServer();
                         con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
                     }
