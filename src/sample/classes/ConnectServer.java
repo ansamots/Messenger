@@ -24,8 +24,10 @@ public class ConnectServer extends NotifyingImplementation {
         this.login = login;
         this.password = password;
         if(resultAvaliableServer){
-            System.out.println("Страрт-логин истина");
-            checkingAvailabilityServer(ip, port);
+            connector.loginClient(login, password);
+            if(startingCheck){
+                connector.restart();
+            }
         }else {
             System.out.println("Страрт-логин лож");
             checkingAvailabilityServer(ip, port);
@@ -75,7 +77,7 @@ public class ConnectServer extends NotifyingImplementation {
 
     private String login;
     private String password;
-    private boolean resultAvaliableServer = false;
+    private boolean resultAvaliableServer = false; // переменная проверки доступности сервера.
     Connector connector = null;
 
     @Override

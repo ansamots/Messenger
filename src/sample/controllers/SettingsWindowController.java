@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.classes.SaveSettingsClient;
@@ -20,6 +21,9 @@ public class SettingsWindowController extends NotifyingImplementation {
 
     @FXML
     private CheckBox checkBoxSaveChBx;
+
+    @FXML
+    private Label textAvailableServer;
 
     private boolean saveSettings;
 
@@ -50,6 +54,7 @@ public class SettingsWindowController extends NotifyingImplementation {
         }
         Node node = (Node)actionEvent.getSource();
         Stage stage = (Stage)node.getScene().getWindow();
+        addMessage("Ok");
         stage.hide();
         deleteMe();
     }
@@ -69,9 +74,29 @@ public class SettingsWindowController extends NotifyingImplementation {
      * Метод нужен для проверки соединения с сервером для указанного IP и порта.
      */
     public void checkConnectionButton(ActionEvent actionEvent) {
+        addMessage("CheckAvailable");
     }
 
+    /**
+     * Получаем сообщение от медиатора.
+     */
     @Override
     public void setMessage(String message) {
+        System.out.println("Получено сообщение Настройка" + message);
+        if (message == "true"){
+            textAvailableServer.setText("Сервер доступен");
+            textAvailableServer.setStyle("-fx-text-fill: GREEN");
+        }else{
+            textAvailableServer.setText("Сервер не доступен");
+            textAvailableServer.setStyle("-fx-text-fill: RED");
+        }
+    }
+
+    public String getIP(){
+        return addressServer.getText();
+    }
+
+    public String getPort(){
+        return portServer.getText();
     }
 }

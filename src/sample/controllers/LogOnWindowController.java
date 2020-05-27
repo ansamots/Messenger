@@ -60,7 +60,7 @@ public class LogOnWindowController extends NotifyingImplementation {
     @FXML
     private void settingsButton(ActionEvent actionEvent) { // событие вызова потребуется для получения ссылки на stage.
         Node node = (Node)actionEvent.getSource(); // Получаем объект Нода
-        Stage stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
+        stage = (Stage)node.getScene().getWindow(); // Приравниваем ноду к сцене
         stage.hide(); // Скрываем текущее окно (сцену).
         addMessage("Settings"); //Передаём медиатору сообщение о нажатой кнопке
     }
@@ -170,16 +170,19 @@ public class LogOnWindowController extends NotifyingImplementation {
      * Получаем сообщение от медиатора.
      */
     public void setMessage(String message) {
-        System.out.println("Получено сообщение от Медиатора: "+message);
         if(message.equals("true")){
             testFields();
 //            deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
         }
         if(message.equals("false")){
             errorFields();
+        }else if(message.equals("settingsOk")){
+            existsSettings();
+            stage.show();
         }
     }
 
+    Stage stage = null; //Переменная нужна для скрытия и появления окна логина
 
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
