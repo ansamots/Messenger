@@ -25,9 +25,13 @@ public class Connector extends Service<String> {
      * Проверка логина и пароля для учётной записи в системе.
      */
     public void loginClient(String login, String password){
+        if(loginPpproved){
+
+        }
         this.login = login;
         this.password = password;
         loginCheck = true;
+
     }
 
     @Override
@@ -45,30 +49,40 @@ public class Connector extends Service<String> {
                     return message;
 
 
-                }else if(loginCheck){
+                }else if(loginPpproved){
 
                     try{
-                        writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(socket));
-                        writer.println(login);
-                        writer.flush();
-                        writer.println(password);
-                        writer.flush();
-
                         streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
                         bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+                        message = bufferedReader.readLine(); // Здесь здём серввер, пока он скажет что готов принять, логин и пароль.
+                        System.out.println("Чтение ридера: " + message);
+                        if(message.equals("ready")){
+                            writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(socket));
+                            writer.println(login);
+                            writer.flush();
+                            writer.println(password);
+                            writer.flush();
+                        }
                         message = bufferedReader.readLine();
                     }catch (Exception e){
-                        message = "Сбой проверки";
+                        message = "Сбой проверки" + e;
                     }
 
 
                 }else if(checkAvaliable){
                     try {
-                        connectServer = new Socket("127.0.0.1", 5000); //создаём сокет подключения к серверу.
-                        message = "true";
+                        connectServer = new Socket(ip, Integer.parseInt(port)); //создаём сокет подключения к серверу.
+                        if(loginCheck){
+                            message = "$L_available:true";
+                            restart();
+                        }else {
+                            message = "available:true";
+                        }
+                        loginPpproved = true;
                     }catch (Exception e){
                         System.out.println(e.getMessage());
-                        message = "false";
+                        message = "available:false";
+                        loginPpproved = false;
                     }
                 }
 
@@ -83,7 +97,8 @@ public class Connector extends Service<String> {
     private String password;
 
     private boolean checkAvaliable = false; // Булево значение для определяет, доступен сервер или нет.
-    private boolean loginCheck = false; // Булево значение, пройдена авторизация или нет.
+    private boolean loginCheck = false; // Булево значение, мы хотим авторизоваться итли просто проверяем доступность сервера.
+    private boolean loginPpproved; // Переменная нужна для проверки, если сервер доступен, то можно запускать авторизацию.
     private boolean chat = false; // Булево значение, запущен ли уже чат или нет.
 
     private Socket connectServer = null;

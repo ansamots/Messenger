@@ -8,80 +8,91 @@ import javafx.event.EventHandler;
 public class ConnectServer extends NotifyingImplementation {
 
     /**
-     * Конструктор используется для добавления в медиатор.
+     * Конструктор используется для добавления в медиатор и инсталяции паралельной задачи.
      */
     public ConnectServer(){
         super();
         connector = new Connector();
+        connector.setOnSucceeded(new EventHandler<WorkerStateEvent>() { // запускаем паралельный поток в при помощи Service
+            @Override
+            public void handle(WorkerStateEvent event) {
+                answerService((String)event.getSource().getValue());
+            }
+        });
+    }
+
+    /**
+     * В этом методе обрабатываем ответ от сервиса, Зделано для того, чтобы обеспечить логику
+     * в работе с попыткой войти в систему и проверки доступности.
+     */
+    private void answerService(String s){
+        if(s.equals("$L_available:true")){ // Первым должы получить ответ о доступности сервера, а ключ $L_ нужен для определения что это поптка логиниться.
+            availabeServer = true;
+            startLogin();
+        }else if(s.equals("available:true")){
+            addMessage("Сервер доступен");
+        }else if(s.equals("available:false")){
+            addMessage("Сервер не доступен");
+        } else {
+            System.out.println("Ответ паралельного потока: "+ s);
+        }
     }
 
     /**
      * Метод для авторизации в системе по указанным параметрам
      */
-    public void startLogin(String ip, String port, String login, String password){
-        this.ip = ip;
-        this.port = port;
-        this.login = login;
-        this.password = password;
-        if(resultAvaliableServer){
+    private void startLogin(){
+        if(!availabeServer){
+            checkingAvailabilityServer();
+        }else{
             connector.loginClient(login, password);
-            if(startingCheck){
-                connector.restart();
-            }
-        }else {
-            System.out.println("Страрт-логин лож");
-            checkingAvailabilityServer(ip, port);
+            connector.restart();
         }
     }
 
     /**
      * Метод для проверки связи с сервером по указанным параметрам
      */
-    public void checkingAvailabilityServer(String ip, String port){
+    private void checkingAvailabilityServer(){
         connector.checkAvaliable(ip, port);
-        connector.setOnSucceeded(new EventHandler<WorkerStateEvent>() { // запускаем паралельный поток в при помощи Service
-            @Override
-            public void handle(WorkerStateEvent event) {
-                System.out.println("Ответ паралельного потока: "+ event.getSource().getValue());
-                addMessage((String)event.getSource().getValue());
-//                connector.restart();
-                if((String)event.getSource().getValue() == "true"){
-                    resultAvaliableServer = true;
-                }else if((String)event.getSource().getValue() == "false"){
-                    resultAvaliableServer = false;
-                }
-            }
-        });
-        if(startingCheck){
-            connector.restart();
-        }else{
-            connector.start();
-            startingCheck = true;
-        }
-
+        connector.restart();
     }
 
     /**
-     * Метод возвращиет булево значение о доступности сервера
-     * true - доступен, false -нет.
-     * @return
+     * Здесь ивициализируем параметры для полного входа в систему
      */
-    public boolean results(){
-        return resultAvaliableServer;
+    public void initializeParameters(String ip, String port, String login, String password){
+        this.ip = ip;
+        this.port = port;
+        this.login = login;
+        this.password = password;
     }
 
-    private boolean startingCheck = false; // Переменная нужна для контроля разового старта коннектора.
+    /**
+     * А здесь только для проверки доступности
+     */
+    public void initializeParameters(String ip, String port){
+        this.ip = ip;
+        this.port = port;
+    }
+
 
     private String ip;
     private String port;
 
     private String login;
     private String password;
-    private boolean resultAvaliableServer = false; // переменная проверки доступности сервера.
-    Connector connector = null;
+
+    private Connector connector = null;
+
+    private boolean availabeServer; // булево значение о доступности сервера
 
     @Override
     public void setMessage(String message) {
-
+        if(message.equals("login")){
+            startLogin();
+        }else if(message.equals("check")){
+            checkingAvailabilityServer();
+        }
     }
 }

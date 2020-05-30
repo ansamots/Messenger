@@ -29,11 +29,17 @@ public class ServerProcessing extends Thread {
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            out.write("ready");
+            out.flush();
             while (!autentificatedUser) { // здесь сделали разделение по авторизации и уже авторизованному пользователю
-                System.out.println("Метка");
+
+                System.out.println("Метка -1");
                 login = in.readLine();
+                System.out.println("Метка -2");
                 password = in.readLine();
+                System.out.println("Метка -3");
                 checkAuthentication(login, password);
+                System.out.println("Метка -4");
 
             }
             while (true){ // Здесь пользователь уже авторизован.

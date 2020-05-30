@@ -44,10 +44,12 @@ public class MediarotImplementation implements Mediator {
                     System.out.println(n);
                     if(notifyingArrayListist.get(n-1) instanceof ConnectServer){ // -1 ставим, потому что нумерация начинается с 0.
                         ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
-                        con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                        con.initializeParameters(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                        con.setMessage("login");
                     }else if(n == length){
                         ConnectServer con = new ConnectServer();
-                        con.startLogin(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                        con.initializeParameters(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
+                        con.setMessage("login");
                     }
                 }
             }
@@ -76,10 +78,12 @@ public class MediarotImplementation implements Mediator {
                     System.out.println(n);
                     if(notifyingArrayListist.get(n-1) instanceof ConnectServer){
                         ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
-                        con.checkingAvailabilityServer(set.getIP(), set.getPort());
+                        con.initializeParameters(set.getIP(), set.getPort());
+                        con.setMessage("check");
                     }else if(n == length){
                         ConnectServer con = new ConnectServer();
-                        con.checkingAvailabilityServer(set.getIP(), set.getPort());
+                        con.initializeParameters(set.getIP(), set.getPort());
+                        con.setMessage("check");
                     }
                 }
             } else if(message == "Ok"){
