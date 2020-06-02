@@ -45,7 +45,6 @@ public class LogOnWindowController extends NotifyingImplementation {
     private void logInButton(ActionEvent actionEvent){
         String login = logonField.getText();
         String password = passwordField.getText();
-        System.out.println(login + " " + password);
         if (login.equals("") || password.equals("")){ // если поля пустыа то выводим надпись
             markFields(); // здесь метод вывода надписи
         }else {

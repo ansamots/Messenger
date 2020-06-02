@@ -30,7 +30,7 @@ public class MediarotImplementation implements Mediator {
      * предназначено.
      */
     public void notifyUsers(Notifying notifying, String message) {
-        System.out.println("Получено сообщение: "+message);
+        System.out.println("Получено сообщение: "+message + ", от: "+ notifying);
 
         /**
          * Определяем, если сообщение поступило от окна входа в систему, то обрабатываем его методы
@@ -41,7 +41,6 @@ public class MediarotImplementation implements Mediator {
                 LogOnWindowController log = (LogOnWindowController) notifying;
                 int length = notifyingArrayListist.size(); // Определяем длинну массива
                 for (int n = 1; n <= length; n++){ // Бежим по длинне массива
-                    System.out.println(n);
                     if(notifyingArrayListist.get(n-1) instanceof ConnectServer){ // -1 ставим, потому что нумерация начинается с 0.
                         ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
                         con.initializeParameters(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
