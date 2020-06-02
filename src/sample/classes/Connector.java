@@ -30,7 +30,6 @@ public class Connector extends Service<String> {
         this.login = login;
         this.password = password;
         loginCheck = true;
-
     }
 
     @Override
