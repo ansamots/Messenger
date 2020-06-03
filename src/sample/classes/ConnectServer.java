@@ -27,10 +27,11 @@ public class ConnectServer extends NotifyingImplementation {
      */
     private void answerService(String s){
         if(s.equals("$L_available:true")){ // Первым должы получить ответ о доступности сервера, а ключ $L_ нужен для определения что это поптка логиниться.
-            availabeServer = true;
+            availabeServer = true; // присваиваем  истину о доступнсти сервера.
             startLogin();
         }else if(s.equals("available:true")){
             addMessage("Сервер доступен");
+            availabeServer = true; // присваиваем  истину о доступнсти сервера.
         }else if(s.equals("available:false")){
             addMessage("Сервер не доступен");
         } else {
@@ -42,10 +43,10 @@ public class ConnectServer extends NotifyingImplementation {
      * Метод для авторизации в системе по указанным параметрам
      */
     private void startLogin(){
-        if(!availabeServer){
+        if(!availabeServer){ // если не присвоена истина о доступнсти сервера, то проверяем сначало его доступность
+            connector.loginClient(login, password); // Даём классу понять что проверяем для входв в систему
             checkingAvailabilityServer();
         }else{
-            connector.loginClient(login, password);
             connector.restart();
         }
     }

@@ -29,8 +29,14 @@ public class ServerProcessing extends Thread {
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            try {
+                sleep(1000);
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             out.write("ready");
             out.flush();
+            System.out.println(socket);
             while (!autentificatedUser) { // здесь сделали разделение по авторизации и уже авторизованному пользователю
 
                 System.out.println("Метка -1");

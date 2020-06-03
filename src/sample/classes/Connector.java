@@ -24,9 +24,6 @@ public class Connector extends Service<String> {
      * Проверка логина и пароля для учётной записи в системе.
      */
     public void loginClient(String login, String password){
-        if(loginApproved){
-
-        }
         this.login = login;
         this.password = password;
         loginCheck = true;
@@ -51,7 +48,9 @@ public class Connector extends Service<String> {
 
                     try{
                         streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
+                        System.out.println(connectServer);
                         bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+                        System.out.println("Здесь замирает");
                         message = bufferedReader.readLine(); // Здесь ждём серввер, пока он скажет что готов принять, логин и пароль.
                         System.out.println("Чтение ридера: " + message);
                         if(message.equals("ready")){
