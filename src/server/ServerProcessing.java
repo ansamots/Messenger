@@ -28,22 +28,19 @@ public class ServerProcessing extends Thread {
         try {
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            try {
-                sleep(1000);
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            out.write("ready");
-            out.flush();
-            System.out.println(socket);
+            out = new PrintWriter(socket.getOutputStream(), true);
+//            out.println("ready");
+//            System.out.println(socket);
             while (!autentificatedUser) { // здесь сделали разделение по авторизации и уже авторизованному пользователю
 
                 System.out.println("Метка -1");
                 login = in.readLine();
+                System.out.println(login);
                 System.out.println("Метка -2");
                 password = in.readLine();
+                System.out.println(password);
                 System.out.println("Метка -3");
+                System.out.println("Login: "+login+" Password: "+password);
                 checkAuthentication(login, password);
                 System.out.println("Метка -4");
 
@@ -65,15 +62,13 @@ public class ServerProcessing extends Thread {
         try{
             if(l.equals("Admin") && p.equals("12345")){
                 autentificatedUser = true;
-                out.write("Проверка пройдена");
-                out.flush();
+                out.println("Проверка пройдена");
                 System.out.println("Проверка пройена");
             }else {
-                out.write("Проверка не пройдена");
-                out.flush();
+                out.println("Проверка не пройдена");
                 System.out.println("Проверка не пройена");
             }
-        }catch(IOException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
 
@@ -81,7 +76,7 @@ public class ServerProcessing extends Thread {
 
     private Socket socket; // сокет, через который сервер общается с клиентом, кроме него - клиент и сервер никак не связаны
     private BufferedReader in; // поток чтения из сокета
-    private BufferedWriter out; // поток записи в сокет
+    private PrintWriter out; // поток записи в сокет
 
     private boolean autentificatedUser;
     private String outMessage; // Переменная для отправки сообщений

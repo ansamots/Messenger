@@ -47,19 +47,23 @@ public class Connector extends Service<String> {
                 }else if(loginApproved){
 
                     try{
-                        streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
-                        System.out.println(connectServer);
-                        bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
-                        System.out.println("Здесь замирает");
-                        message = bufferedReader.readLine(); // Здесь ждём серввер, пока он скажет что готов принять, логин и пароль.
-                        System.out.println("Чтение ридера: " + message);
-                        if(message.equals("ready")){
-                            writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(socket));
-                            writer.println(login);
-                            writer.flush();
-                            writer.println(password);
-                            writer.flush();
-                        }
+                        System.out.println(login);
+                        System.out.println(password);
+                        writer.println(login);
+//                        writer.flush();
+                        writer.println(password);
+//                        writer.flush();
+//                        streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
+//                        System.out.println(connectServer);
+//                        bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+//                        message = bufferedReader.readLine(); // Здесь ждём серввер, пока он скажет что готов принять, логин и пароль.
+//                        if(message.equals("ready")){
+////                            writer = new PrintWriter(connectServer.getOutputStream()); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(socket));
+//                            writer.println(login);
+//                            writer.flush();
+//                            writer.println(password);
+//                            writer.flush();
+//                        }
                         message = bufferedReader.readLine();
                     }catch (Exception e){
                         message = "Сбой проверки" + e;
@@ -71,6 +75,9 @@ public class Connector extends Service<String> {
                         connectServer = new Socket(ip, Integer.parseInt(port)); //создаём сокет подключения к серверу.
                         if(loginCheck){
                             message = "$L_available:true"; // здесь отправляем доступность сервера для дальней проверки логина и пароля
+                            streamReader = new InputStreamReader(connectServer.getInputStream()); // здесь мы получаем из сокета поток байтови преобразуем в символы
+                            bufferedReader = new BufferedReader(streamReader); // здесь мы уже символы преобразуем в читаемые строки данных.
+                            writer = new PrintWriter(connectServer.getOutputStream(), true); // пишем наши данные в сокет. Посмотреть BufferedWriter(new OutputStreamWriter(socket));
 //                            restart();
                         }else {
                             message = "available:true"; // здесь отправляем обычную доступность сервера

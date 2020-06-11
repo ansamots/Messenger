@@ -39,10 +39,10 @@ public class MediarotImplementation implements Mediator {
             if(message == "Login"){
                 waitingAnswer = (LogOnWindowController)notifying; // Пометили тот объект который ждёт ответа.
                 LogOnWindowController log = (LogOnWindowController) notifying;
-                int length = notifyingArrayListist.size(); // Определяем длинну массива
+                int length = notifyingArrayLists.size(); // Определяем длинну массива
                 for (int n = 1; n <= length; n++){ // Бежим по длинне массива
-                    if(notifyingArrayListist.get(n-1) instanceof ConnectServer){ // -1 ставим, потому что нумерация начинается с 0.
-                        ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
+                    if(notifyingArrayLists.get(n-1) instanceof ConnectServer){ // -1 ставим, потому что нумерация начинается с 0.
+                        ConnectServer con = (ConnectServer) notifyingArrayLists.get(n-1);
                         con.initializeParameters(log.getHostIP(), log.getPortNumber(), log.getHostLogin(), log.getHostPassword());
                         con.setMessage("login");
                     }else if(n == length){
@@ -72,11 +72,11 @@ public class MediarotImplementation implements Mediator {
             waitingAnswer = notifying;
             if (message == "CheckAvailable"){
                 SettingsWindowController set = (SettingsWindowController) notifying;
-                int length = notifyingArrayListist.size();
+                int length = notifyingArrayLists.size();
                 for (int n = 1; n <= length; n++){
                     System.out.println(n);
-                    if(notifyingArrayListist.get(n-1) instanceof ConnectServer){
-                        ConnectServer con = (ConnectServer) notifyingArrayListist.get(n-1);
+                    if(notifyingArrayLists.get(n-1) instanceof ConnectServer){
+                        ConnectServer con = (ConnectServer) notifyingArrayLists.get(n-1);
                         con.initializeParameters(set.getIP(), set.getPort());
                         con.setMessage("check");
                     }else if(n == length){
@@ -86,7 +86,7 @@ public class MediarotImplementation implements Mediator {
                     }
                 }
             } else if(message == "Ok"){
-                for (Notifying n: notifyingArrayListist){
+                for (Notifying n: notifyingArrayLists){
                     if(n instanceof LogOnWindowController){
                         n.setMessage("settingsOk");
                     }
@@ -99,14 +99,14 @@ public class MediarotImplementation implements Mediator {
          */
         if(notifying instanceof ConnectServer){
             if (waitingAnswer instanceof LogOnWindowController){
-                for (Notifying n: notifyingArrayListist){
+                for (Notifying n: notifyingArrayLists){
                     if(n instanceof LogOnWindowController){
                         n.setMessage(message);
                     }
                 }
 
             }else if (waitingAnswer instanceof SettingsWindowController){
-                for (Notifying n: notifyingArrayListist){
+                for (Notifying n: notifyingArrayLists){
                     if(n instanceof SettingsWindowController){
                         n.setMessage(message);
                     }
@@ -121,17 +121,18 @@ public class MediarotImplementation implements Mediator {
      * Получаем через этот метод объекты, и добавляем в список.
      */
     public void addUsers(Notifying notifying){
-        notifyingArrayListist.add(notifying);
+        notifyingArrayLists.add(notifying);
     }
 
     /**
      * Метод для удаления участников
      */
     public void deleteUsers(Notifying notifying) {
-        notifyingArrayListist.remove(notifying);
+        notifyingArrayLists.remove(notifying);
     }
 
-    private Notifying waitingAnswer; // Здесь помечается объект, который ждёт ответа.
+    private Notifying waitingAnswer; // Здесь помечается объект, который ждёт ответа. Нужно для разделения кому ответить,
+                                     // окну для входа в систему или окну настроек сервера и порта.
 
-    ArrayList<Notifying> notifyingArrayListist = new ArrayList<>(); // Список участников.
+    ArrayList<Notifying> notifyingArrayLists = new ArrayList<>(); // Список участников.
 }

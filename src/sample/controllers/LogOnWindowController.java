@@ -43,8 +43,8 @@ public class LogOnWindowController extends NotifyingImplementation {
      */
     @FXML
     private void logInButton(ActionEvent actionEvent){
-        String login = logonField.getText();
-        String password = passwordField.getText();
+        login = logonField.getText();
+        password = passwordField.getText();
         if (login.equals("") || password.equals("")){ // если поля пустыа то выводим надпись
             markFields(); // здесь метод вывода надписи
         }else {
@@ -147,14 +147,14 @@ public class LogOnWindowController extends NotifyingImplementation {
      * Геттер для логина
      */
     public String getHostLogin() {
-        return logonField.getText();
+        return login;
     }
 
     /**
      * Геттер для пароля
      */
     public String getHostPassword() {
-        return passwordField.getText();
+        return password;
     }
 
     public String getHostIP(){
@@ -172,17 +172,20 @@ public class LogOnWindowController extends NotifyingImplementation {
         if(message.equals("true")){
             testFields();
 //            deleteMe(); // Удаляем укземпляр из Медиатора, т.к. прошла аунтентификация.
-        }
-        if(message.equals("false")){
+        }else if(message.equals("false")){
             errorFields();
         }else if(message.equals("settingsOk")){
             existsSettings();
             stage.show();
+        } else {
+
         }
     }
 
     Stage stage = null; //Переменная нужна для скрытия и появления окна логина
 
+    private String login;
+    private String password;
     private String hostIP; // Адрес Сервера подклчения
     private String portNumber; //Порт сервера подключения
 }

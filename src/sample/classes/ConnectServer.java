@@ -36,6 +36,7 @@ public class ConnectServer extends NotifyingImplementation {
             addMessage("Сервер не доступен");
         } else {
             System.out.println("Ответ паралельного потока: "+ s);
+            addMessage(s);
         }
     }
 
