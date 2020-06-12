@@ -48,6 +48,7 @@ public class ConnectServer extends NotifyingImplementation {
             connector.loginClient(login, password); // Даём классу понять что проверяем для входв в систему
             checkingAvailabilityServer();
         }else{
+            connector.loginClient(login, password); // Даём классу понять что проверяем для входв в систему
             connector.restart();
         }
     }
