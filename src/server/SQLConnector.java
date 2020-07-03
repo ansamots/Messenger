@@ -1,11 +1,10 @@
 package server;
 
 
-import com.mysql.cj.xdevapi.Statement;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class SQLConnector {
     public static void main (String[] args){
@@ -15,8 +14,14 @@ public class SQLConnector {
             String password = "Hfleuf";
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, login, password);
-            Statement statement = (Statement) connection.createStatement();
-//            ResultSet select = statement
+            Statement statement = connection.createStatement();
+            ResultSet select = statement.executeQuery("SELECT * FROM table_user");
+            while(select.next()){
+               System.out.println(select.getString(1));
+                System.out.println(select.getString(2));
+                System.out.println(select.getString(3));
+
+            }
             System.out.println("All good!");
         }catch(Exception e){
             System.out.println(e);
