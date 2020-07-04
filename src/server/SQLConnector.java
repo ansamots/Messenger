@@ -15,6 +15,9 @@ public class SQLConnector {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, login, password);
             Statement statement = connection.createStatement();
+//            statement.executeUpdate("DROP TABLE table_user"); // Удаляем таблицу sql запросом
+//            statement.executeUpdate("CREATE TABLE table_user"); // Создаём таблицу запросом
+//            statement.executeUpdate("INSERT INTO table_user VALUES (NULL, 'First_User', 'test@email.ru');"); // Вставляем значение в таблицу.
             ResultSet select = statement.executeQuery("SELECT * FROM table_user");
             while(select.next()){
                System.out.println(select.getString(1));
