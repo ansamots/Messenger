@@ -60,6 +60,9 @@ public class ServerProcessing extends Thread {
      */
     private void checkAuthentication(String l, String p) {
         try{
+            SQLConnector sqlConnector = new SQLConnector();
+            boolean result = sqlConnector.autUser(l,p);
+
             if(l.equals("Admin") && p.equals("12345")){
                 autentificatedUser = true;
                 out.println("Проверка пройдена");
