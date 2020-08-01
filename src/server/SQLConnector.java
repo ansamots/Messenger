@@ -52,6 +52,27 @@ public class SQLConnector {
     }
 
 
+    /**
+     * метод проверяет в каких шруппах состоит пользователь
+     */
+    public int[] userInGroup (int userID){
+        int[] a = null;
+        String qwery = ("SELECT table_group_id FROM user_in_group WHERE table_user_id = ?;");
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(qwery);
+            preparedStatement.setString(1, String.valueOf(userID));
+            select = preparedStatement.executeQuery();
+            while(select.next()){
+                System.out.println(select.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return a;
+    }
+
+
     private String url;
     private String login;
     private String password;
