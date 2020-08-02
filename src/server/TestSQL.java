@@ -9,7 +9,7 @@ public class TestSQL {
         boolean b = sqlConnector.autUser(admin, pass);
         System.out.println("Ответ SQL: "+ b);
 
-        int[] a = sqlConnector.userInGroup(1);
+        int[] a = sqlConnector.userInGroup(3);
         System.out.println(a);
     }
 }

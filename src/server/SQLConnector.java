@@ -63,8 +63,10 @@ public class SQLConnector {
             preparedStatement = connection.prepareStatement(qwery);
             preparedStatement.setString(1, String.valueOf(userID));
             select = preparedStatement.executeQuery();
+            System.out.println("Количество строк: "+select.getRow());
             while(select.next()){
                 System.out.println(select.getString(1));
+//                a =
             }
         } catch (SQLException e) {
             e.printStackTrace();
