@@ -11,7 +11,7 @@ public class SQLConnector {
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
             connection = DriverManager.getConnection(url, login, password); // Делаем подключение
-            statement = connection.createStatement();
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 //            statement.executeUpdate("DROP TABLE table_user"); // Удаляем таблицу sql запросом
 //            statement.executeUpdate("CREATE TABLE table_user"); // Создаём таблицу запросом
 //            statement.executeUpdate("INSERT INTO table_user VALUES (NULL, 'First_User', 'test@email.ru');"); // Вставляем значение в таблицу.
@@ -53,20 +53,23 @@ public class SQLConnector {
 
 
     /**
-     * метод проверяет в каких шруппах состоит пользователь
+     * метод проверяет в каких группах состоит пользователь
      */
     public int[] userInGroup (int userID){
         int[] a = null;
         String qwery = ("SELECT table_group_id FROM user_in_group WHERE table_user_id = ?;");
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(qwery);
+            preparedStatement = connection.prepareStatement(qwery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             preparedStatement.setString(1, String.valueOf(userID));
             select = preparedStatement.executeQuery();
-            System.out.println("Количество строк: "+select.getRow());
+            select.last(); // переключаемся на последнюю строку в полученном запросе.
+            int length = select.getRow(); // Получаем число последней строки
+            a = new int[length]; // создаём массив под колличество строк
+            select.first(); // Возвращаем курсор на первую строчку
             while(select.next()){
                 System.out.println(select.getString(1));
-//                a =
+                System.out.println("Количество строк: "+select.getRow());
             }
         } catch (SQLException e) {
             e.printStackTrace();
