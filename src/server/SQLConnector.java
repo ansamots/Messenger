@@ -1,6 +1,5 @@
 package server;
 
-
 import java.sql.*;
 
 public class SQLConnector {
@@ -23,6 +22,7 @@ public class SQLConnector {
 
 
     /**
+     * Метод для проверки логина и пароля на соответствие с данными в базе
      * В таблице которую используем в этом методе следующие индексы
      *  1 - Первичный ключ записи в таблице
      *  2 - Логин
@@ -54,22 +54,29 @@ public class SQLConnector {
 
     /**
      * метод проверяет в каких группах состоит пользователь
+     * В таблице которую используем в этом методе следующие индексы
+     * 1 - Внешний ключ от id пользователя
+     * 2 - Внешний ключ от id группы
+     * 3 - первычный ключ для таблицы с чатом
      */
     public int[] userInGroup (int userID){
         int[] a = null;
         String qwery = ("SELECT table_group_id FROM user_in_group WHERE table_user_id = ?;");
-        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(qwery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             preparedStatement.setString(1, String.valueOf(userID));
-            select = preparedStatement.executeQuery();
+            select = preparedStatement.executeQuery(); // выполняется запрос где в интовых значениях получаем номера групп
             select.last(); // переключаемся на последнюю строку в полученном запросе.
             int length = select.getRow(); // Получаем число последней строки
-            a = new int[length]; // создаём массив под колличество строк
-            select.first(); // Возвращаем курсор на первую строчку
-            while(select.next()){
-                System.out.println(select.getString(1));
-                System.out.println("Количество строк: "+select.getRow());
+            if (length > 0){
+                a = new int[length]; // создаём массив под колличество строк
+                select.first(); // Возвращаем курсор на первую строчку
+                int i = 0;
+                a[i] = select.getInt(1); // Помещаем в массив данные из базы.
+                while(select.next()){
+                    i++;
+                    a[i] = select.getInt(1);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,10 +85,52 @@ public class SQLConnector {
     }
 
 
+    /**
+     * Метод для получения списка чатов пользователя с пользователем
+     * @param userID айдишник пользователя для получения списка чатов
+     * @return Возвращаем универсальный ключ для чата пользователь с пользователем
+     * В таблице которую используем в этом методе следующие индексы
+     * 1 - Внешний ключ того, кто отправляет
+     * 2 - Внешний ключ того, кто получает
+     * 3 - одобрен ли чат с этим пользователем
+     * 4 - Заблокирован ли пользователь
+     * 5 - Универсальный ключ для этой связки пользователя и получателя.
+     */
+    public int [] userToUser (int userID){
+        int[] a = null;
+        String qwery = ("SELECT id_u_tu_u_key FROM user_to_user WHERE user_id_sent = ?;");
+        try {
+            preparedStatement = connection.prepareStatement(qwery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            preparedStatement.setString(1, String.valueOf(userID));
+            select = preparedStatement.executeQuery();
+            select.last();
+            int length = select.getRow(); // Получаем число последней строки
+            if (length > 0){
+                a = new int[length];
+                int i = 0;
+                select.first();
+                a[i] = select.getInt(1);
+                while(select.next()){
+                    i++;
+                    a[i] = select.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return a;
+    }
+
+    
+
+
+
+
     private String url;
     private String login;
     private String password;
     private Connection connection;
+    private PreparedStatement preparedStatement;
     private Statement statement;
     private ResultSet select;
 }
