@@ -5,8 +5,8 @@ import java.sql.*;
 public class SQLConnector {
     SQLConnector(){
         try{
-//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
-            url = "jdbc:mysql://localhost:3306/test_db";
+            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+//            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -33,10 +33,10 @@ public class SQLConnector {
      */
     public boolean autUser(String login, String password){ // В этом методе реализован запрос к базе на соответствие логина и пароля пользователя
         boolean loginResult = false;
-        String qwery = ("SELECT * FROM table_user WHERE name = ?;"); // Сборная строка, где за место знака вопроса подставляется значение
+        String query = ("SELECT * FROM table_user WHERE name = ?;"); // Сборная строка, где за место знака вопроса подставляется значение
         PreparedStatement preparedStatement = null; // При помощи этого класса будем собирать строку в запрос
         try {
-            preparedStatement = connection.prepareStatement(qwery); // Передаём строку
+            preparedStatement = connection.prepareStatement(query); // Передаём строку
             preparedStatement.setString(1, login); // По индексу знака вопроса вставляем значение
             select = preparedStatement.executeQuery(); // Выполняем наш сборный запрос
             while(select.next()){
@@ -62,9 +62,9 @@ public class SQLConnector {
      */
     public int[] userInGroup (int userID){
         int[] a = null;
-        String qwery = ("SELECT table_group_id FROM user_in_group WHERE table_user_id = ?;");
+        String query = ("SELECT table_group_id FROM user_in_group WHERE table_user_id = ?;");
         try {
-            preparedStatement = connection.prepareStatement(qwery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             preparedStatement.setString(1, String.valueOf(userID));
             select = preparedStatement.executeQuery(); // выполняется запрос где в интовых значениях получаем номера групп
             select.last(); // переключаемся на последнюю строку в полученном запросе.
@@ -87,16 +87,41 @@ public class SQLConnector {
 
 
     /**
-     * метод для получения данных о группе кто в ней состоит и кто в неё входит
+     * метод для получения данных о группе кто в ней админ и кто в неё входит
      * данные полученные отправляются каждому участнику этой группы.
      * @param idGroup - получаем id руппы что бы посторить запрос для данных этой группы.
-     * @return - возвращаем массив стрингов
+     * @return - возвращаем массив стрингов с данными о групппе
+     * В таблице которую используем в этом методе следующие индексы
+     * 1 - Первичный ключь id таблицы.
+     * 2 - Имя группы
+     * 3 - число участников (Просто интовое число, потом будут искаться участники в другой таблице, а число это нужно для отображения именно числа человек в группе)
+     * 4 - Последнее сообщение адресованное этой группе
+     * 5 - администратор группы, внешний ключ
      */
-//    public String[] infoGroup(int idGroup){
-//        String[] groupInfo;
-//
-//        return groupInfo;
-//    }
+    public String[] infoGroup(int idGroup){
+        String[] groupInfo = new String[5];
+        String qwery = ("SELECT * FROM table_group WHERE id_group = ?");
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(qwery);
+            preparedStatement.setString(1, String.valueOf(idGroup));
+            select = preparedStatement.executeQuery();
+            while(select.next()){
+                groupInfo[0] = select.getString(1);
+                groupInfo[1] = select.getString(2);
+                groupInfo[2] = select.getString(3);
+                groupInfo[3] = select.getString(4);
+                groupInfo[4] = select.getString(5);
+            }
+
+
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+
+        return groupInfo;
+    }
+
+//    public
 
 
     /**

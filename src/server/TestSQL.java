@@ -10,17 +10,25 @@ public class TestSQL {
         System.out.println("Ответ SQL: "+ b);
 
         int[] a = sqlConnector.userInGroup(3);
+        System.out.println("Вывод 1");
         System.out.println(a[1]);
 
         a = sqlConnector.userToUser(3);
+        System.out.println("Вывод 2");
         System.out.println(a[0]);
 
-        for (int i = 0; i < 10000; i++){
-            a = sqlConnector.userInGroup(3);
-
-
-            a = sqlConnector.userToUser(3);
-
+        String[] s = sqlConnector.infoGroup(2);
+        System.out.println("Вывод 3");
+        for (String q: s) {
+            System.out.println(q);
         }
+
+//        for (int i = 0; i < 10000; i++){
+//            a = sqlConnector.userInGroup(3);
+//
+//
+//            a = sqlConnector.userToUser(3);
+//
+//        }
     }
 }
