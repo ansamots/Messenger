@@ -5,7 +5,8 @@ import java.sql.*;
 public class SQLConnector {
     SQLConnector(){
         try{
-            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -83,6 +84,19 @@ public class SQLConnector {
         }
         return a;
     }
+
+
+    /**
+     * метод для получения данных о группе кто в ней состоит и кто в неё входит
+     * данные полученные отправляются каждому участнику этой группы.
+     * @param idGroup - получаем id руппы что бы посторить запрос для данных этой группы.
+     * @return - возвращаем массив стрингов
+     */
+//    public String[] infoGroup(int idGroup){
+//        String[] groupInfo;
+//
+//        return groupInfo;
+//    }
 
 
     /**
