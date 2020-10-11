@@ -1,12 +1,13 @@
 package server;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class SQLConnector {
     SQLConnector(){
         try{
-            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
-//            url = "jdbc:mysql://localhost:3306/test_db";
+//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -121,7 +122,65 @@ public class SQLConnector {
         return groupInfo;
     }
 
-//    public
+    /**
+     * Метод предназначен для получение данных из таблицы сообщений чата
+     * проверка идёт по ключу группы и отправляется запрашиваемому
+     *  В массива int[] key мы используем индексы которые потом используем
+     *  для вставки в запрос и по этим ключам осуществляем поиск.
+     *  В таблице которую используем в этом методе следующие индексы
+     *  1 - внешний ключ, того кто отправил сообщение
+     *  2 - сообщение
+     *  3 - время отправления сообщения
+     */
+    public ArrayList<String> getChat(int[] key){
+        ArrayList<String> messages = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        if(key.length > 1){ // Если длинна массива юольше чем 1 элемент то выполняется сборка строки для всавки в запрос.
+            stringBuilder.append (key[0]);
+            for (int i = 1; i < key.length; i++){
+                stringBuilder.append(" AND ");
+                stringBuilder.append (key[i]);
+            }
+        }else{
+            stringBuilder.append (key[0]);
+        }
+        System.out.println("StringBuilder = "+ stringBuilder);
+
+        String query = ("SELECT * FROM group_chat WHERE linc_id_user_in_groupcol = ?;");
+        try {
+            preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            preparedStatement.setString(1, String.valueOf(stringBuilder));
+            ResultSet select = preparedStatement.executeQuery();
+            while(select.next()){
+                messages.add(select.getString(1));
+                messages.add(select.getString(2));
+                messages.add(select.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return messages;
+    }
+
+
+    /**
+     * Метод предназначен для отправления сообщения в общую группу.
+     * @param idSent Ключ отправителя сообщения
+     * @param message само сообщение
+     * @param timestamp Время отправки сообщения.
+     */
+    public void sentMessageGroup (int idSent, String message, Timestamp timestamp){
+        String sentMessage = ("INSERT INTO group_chat VALUES (?, '?', ?);");
+        try {
+            preparedStatement = connection.prepareStatement(sentMessage);
+            preparedStatement.setInt(1, idSent);
+            preparedStatement.setString(2, message);
+            preparedStatement.setTimestamp(3,timestamp);
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -159,10 +218,6 @@ public class SQLConnector {
         }
         return a;
     }
-
-
-
-
 
 
     private String url;
