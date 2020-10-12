@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class SQLConnector {
     SQLConnector(){
         try{
-//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
-            url = "jdbc:mysql://localhost:3306/test_db";
+            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+//            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -35,7 +35,7 @@ public class SQLConnector {
     public boolean autUser(String login, String password){ // В этом методе реализован запрос к базе на соответствие логина и пароля пользователя
         boolean loginResult = false;
         String query = ("SELECT * FROM table_user WHERE name = ?;"); // Сборная строка, где за место знака вопроса подставляется значение
-        PreparedStatement preparedStatement = null; // При помощи этого класса будем собирать строку в запрос
+        PreparedStatement preparedStatement; // При помощи этого класса будем собирать строку в запрос
         try {
             preparedStatement = connection.prepareStatement(query); // Передаём строку
             preparedStatement.setString(1, login); // По индексу знака вопроса вставляем значение
@@ -144,7 +144,6 @@ public class SQLConnector {
         }else{
             stringBuilder.append (key[0]);
         }
-        System.out.println("StringBuilder = "+ stringBuilder);
 
         String query = ("SELECT * FROM group_chat WHERE linc_id_user_in_groupcol = ?;");
         try {
@@ -169,18 +168,45 @@ public class SQLConnector {
      * @param message само сообщение
      * @param timestamp Время отправки сообщения.
      */
-    public void sentMessageGroup (int idSent, String message, Timestamp timestamp){
-        String sentMessage = ("INSERT INTO group_chat VALUES (?, '?', ?);");
+    public void sentMessageGroup (int idSent, int idGroup, String message, Timestamp timestamp){
+        String sentMessage = ("INSERT INTO group_chat VALUES (?, ?, ?);");
         try {
             preparedStatement = connection.prepareStatement(sentMessage);
             preparedStatement.setInt(1, idSent);
             preparedStatement.setString(2, message);
             preparedStatement.setTimestamp(3,timestamp);
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
+            setTimeAfterMessage(idGroup, timestamp);
         } catch (SQLException e) {
+            System.out.println("Класс SQLConnectiom метод sentMessageGroup");
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Метод представляет собой продолжение sentMessageGroup здесь реализовано обновление даты полседнего
+     * сообщеня для группы.
+     * @param idGroup Параметр id группы для обновления даты последнего сообщения
+     * @param timeAfterMessage Дата поседнего сообщения
+     */
+    void setTimeAfterMessage (int idGroup, Timestamp timeAfterMessage){
+        String timeMessage = ("UPDATE table_group SET last_message = ? WHERE id_group = ?;");
+        PreparedStatement preparedStatement;
+        try{
+            preparedStatement = connection.prepareStatement(timeMessage);
+            preparedStatement.setTimestamp(1, timeAfterMessage);
+            preparedStatement.setInt(2, idGroup);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            System.out.println("Класс SQLConnectiom метод setTimeAfterMessage");
+            System.out.println(e);
+        }
+    }
+
+
+    
+
 
 
     /**

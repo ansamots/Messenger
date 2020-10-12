@@ -1,6 +1,7 @@
 package server;
 
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class TestSQL {
@@ -18,7 +19,8 @@ public class TestSQL {
             System.out.println(s);
         }
 
-//        sqlConnector.sentMessageGroup(1, "Сообщение из метода", D);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);
 
 //        int[] a = sqlConnector.userInGroup(3);
 //        System.out.println("Вывод 1");
