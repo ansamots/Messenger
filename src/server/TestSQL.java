@@ -19,8 +19,8 @@ public class TestSQL {
             System.out.println(s);
         }
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);
 
 //        int[] a = sqlConnector.userInGroup(3);
 //        System.out.println("Вывод 1");
