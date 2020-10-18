@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class SQLConnector {
     SQLConnector(){
         try{
-            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
-//            url = "jdbc:mysql://localhost:3306/test_db";
+//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -199,11 +199,30 @@ public class SQLConnector {
             preparedStatement.setInt(2, idGroup);
             preparedStatement.executeUpdate();
         }catch (SQLException e){
-            System.out.println("Класс SQLConnectiom метод setTimeAfterMessage");
+            System.err.println("Класс SQLConnector метод setTimeAfterMessage");
             System.out.println(e);
         }
     }
 
+
+    /**
+     * Метод предназначен для получения сообщений при входе пользователя в систему
+     * здесь проверяется дата последнего входа и даты последних сообщений в группе
+     * на основании чего и определяется какие сообщения, если они есть, надо
+     * получить пользователю.
+     * @param idUser Ключь пользователя
+     * @param idGroup Массив групп в которых состоит пользователь
+     * @param lastLogOn Время его выхода из системы.
+     * @return Возвращаем сообщений от групп в следующем алгоритме:
+     * 1. id - по ключам пользователь группа, 2 - сообщение, 3 - времен-
+     * ная метнка когда было получено сообщение.
+     */
+    public ArrayList<String> getMessageGroup(int idUser, int[] idGroup, Timestamp lastLogOn){
+        ArrayList<String> messageGroup = null;
+        String qwery = ("");
+//        PreparedStatement preparedStatement = connection.prepareStatement()
+        return messageGroup;
+    }
 
 
 

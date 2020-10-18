@@ -19,6 +19,8 @@ public class TestSQL {
             System.out.println(s);
         }
 
+        System.err.println("Класс SQLConnector метод setTimeAfterMessage");
+
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);
 
