@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class SQLConnector {
     SQLConnector(){
         try{
-//            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
-            url = "jdbc:mysql://localhost:3306/test_db";
+            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+//            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
             Class.forName("com.mysql.cj.jdbc.Driver"); // Загружаемый драйвер jdbc для MySQL
@@ -123,20 +123,21 @@ public class SQLConnector {
     }
 
     /**
-     * Метод предназначен для получение данных из таблицы сообщений чата
+     * Метод предназначен для получение сообщений из всех таблиц чатов
      * проверка идёт по ключу группы и отправляется запрашиваемому
+     * Он использыется в тот момент когда пользователь залогинился в новой системе
      *  В массива int[] key мы используем индексы которые потом используем
      *  для вставки в запрос и по этим ключам осуществляем поиск.
      *  В таблице которую используем в этом методе следующие индексы
-     *  1 - внешний ключ, того кто отправил сообщение
+     *  1 - внешний ключ из таблицы table_user, с этим ключом в таблице group_chat хранятся сообщения.
      *  2 - сообщение
      *  3 - время отправления сообщения
      */
-    public ArrayList<String> getChat(int[] key){
+    public ArrayList<String> getChatAll(int[] key){
         ArrayList<String> messages = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
         if(key.length > 1){ // Если длинна массива юольше чем 1 элемент то выполняется сборка строки для всавки в запрос.
-            stringBuilder.append (key[0]);
+            stringBuilder.append (key[0]);  // То есть, можног сделать выборку из нескольких чатов сразу.
             for (int i = 1; i < key.length; i++){
                 stringBuilder.append(" AND ");
                 stringBuilder.append (key[i]);
@@ -218,9 +219,29 @@ public class SQLConnector {
      * ная метнка когда было получено сообщение.
      */
     public ArrayList<String> getMessageGroup(int idUser, int[] idGroup, Timestamp lastLogOn){
-        ArrayList<String> messageGroup = null;
-        String qwery = ("");
-//        PreparedStatement preparedStatement = connection.prepareStatement()
+        ArrayList<Integer> idGroupCheck = new ArrayList<>(); //Здесь будем хранить id групп в которых есть сообщения после последнего входа пользователя
+        ArrayList<String> messageGroup = null; // Эту коллекцию мы будем возвращить.
+        StringBuilder builderIdGroup = new StringBuilder();
+        builderIdGroup.append (idGroup[0]);
+        for (int i = 1; i < idGroup.length; i++){
+            builderIdGroup.append(" AND ");
+            builderIdGroup.append (idGroup[i]);
+        }
+        String qweryTimeStamp = ("SELECT id_group FROM table_group WHERE last_message > ? AND ?;");
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(qweryTimeStamp);
+            preparedStatement.setTimestamp(1, lastLogOn);
+            preparedStatement.setString(2, String.valueOf(builderIdGroup));
+            ResultSet select = preparedStatement.executeQuery();
+            while(select.next()){
+                idGroupCheck.add(select.getInt(1));
+            } // Получили в  idGroupCheck айдишники групп, которые имеют сообщения после последнего логина пользователя
+        }catch (SQLException e){
+            System.err.println("Класс SQLConnector метод getMessageGroup");
+            System.out.println(e);
+        }
+
+
         return messageGroup;
     }
 

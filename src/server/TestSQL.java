@@ -1,6 +1,7 @@
 package server;
 
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -14,12 +15,14 @@ public class TestSQL {
 
         int[] a = {1};
 
-        ArrayList<String> arrayList = sqlConnector.getChat(a);
-        for(String s: arrayList){
-            System.out.println(s);
-        }
+//        ArrayList<String> arrayList = sqlConnector.getChatAll(a);
+//        for(String s: arrayList){
+//            System.out.println(s);
+//        }
 
-        System.err.println("Класс SQLConnector метод setTimeAfterMessage");
+//        Timestamp timestamp = new Timestamp();
+
+        ArrayList<String> s = sqlConnector.getMessageGroup(1, a, Timestamp.valueOf("1970-01-01 12:00:00"));
 
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);
