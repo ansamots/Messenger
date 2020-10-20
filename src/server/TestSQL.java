@@ -13,7 +13,7 @@ public class TestSQL {
         boolean b = sqlConnector.autUser(admin, pass);
         System.out.println("Ответ SQL: "+ b);
 
-        int[] a = {1};
+        int[] a = {1, 2};
 
 //        ArrayList<String> arrayList = sqlConnector.getChatAll(a);
 //        for(String s: arrayList){
@@ -23,6 +23,9 @@ public class TestSQL {
 //        Timestamp timestamp = new Timestamp();
 
         ArrayList<String> s = sqlConnector.getMessageGroup(1, a, Timestamp.valueOf("1970-01-01 12:00:00"));
+        for(String s1: s){
+            System.out.println(s1);
+        }
 
 //        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 //        sqlConnector.sentMessageGroup(1, 1, "Сообщение из метода", timestamp);

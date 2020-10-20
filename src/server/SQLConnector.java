@@ -220,9 +220,9 @@ public class SQLConnector {
      */
     public ArrayList<String> getMessageGroup(int idUser, int[] idGroup, Timestamp lastLogOn){
         ArrayList<Integer> idGroupCheck = new ArrayList<>(); //Здесь будем хранить id групп в которых есть сообщения после последнего входа пользователя
-        ArrayList<String> messageGroup = null; // Эту коллекцию мы будем возвращить.
-        StringBuilder builderIdGroup = new StringBuilder();
-        builderIdGroup.append (idGroup[0]);
+        ArrayList<String> messageGroup = new ArrayList<>(); // Эту коллекцию мы будем возвращить.
+        StringBuilder builderIdGroup = new StringBuilder(); // Этот билдер собирает строчку которую можно будет использоватьв запросе из 1-й или нескольких цифр.
+        builderIdGroup.append (idGroup[0]);// Здесь собираем строчку
         for (int i = 1; i < idGroup.length; i++){
             builderIdGroup.append(" AND ");
             builderIdGroup.append (idGroup[i]);
@@ -241,7 +241,29 @@ public class SQLConnector {
             System.out.println(e);
         }
 
-
+        StringBuilder buildIdLink = new StringBuilder();// Будем собирать строчку из йдишников для таблици group_chat
+        buildIdLink.append(idGroupCheck.get(0));
+        for(int i = 1; i < idGroupCheck.size(); i++){
+            buildIdLink.append(", "+idGroupCheck.get(i));
+        }
+        String qweryMessageChat = ("SELECT * FROM group_chat\n" +
+                "WHERE linc_id_user_in_groupcol IN (\n" +
+                "SELECT id_link FROM user_in_group \n" +
+                "WHERE table_user_id = ? AND table_group_id IN (?));");
+        try{
+            preparedStatement = connection.prepareStatement(qweryMessageChat);
+            preparedStatement.setInt(1, idUser);
+            preparedStatement.setString(2, String.valueOf(buildIdLink));
+            select = preparedStatement.executeQuery();
+            while(select.next()){
+                messageGroup.add(select.getString(1));
+                messageGroup.add(select.getString(2));
+                messageGroup.add(select.getString(3));
+            }
+        }catch(SQLException e){
+            System.err.println("Класс SQLConnector метод getMessageGroup-2");
+            System.out.println(e);
+        }
         return messageGroup;
     }
 
