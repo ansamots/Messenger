@@ -13,8 +13,11 @@ public class TestSQL {
         boolean b = sqlConnector.autUser(admin, pass);
         System.out.println("Ответ SQL: "+ b);
 
-        int[] a = {1, 2};
+        int[] a = {3, 1};
 
+        /**
+         *
+         */
 //        ArrayList<String> arrayList = sqlConnector.getChatAll(a);
 //        for(String s: arrayList){
 //            System.out.println(s);

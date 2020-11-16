@@ -224,14 +224,15 @@ public class SQLConnector {
         StringBuilder builderIdGroup = new StringBuilder(); // Этот билдер собирает строчку которую можно будет использоватьв запросе из 1-й или нескольких цифр.
         builderIdGroup.append (idGroup[0]);// Здесь собираем строчку
         for (int i = 1; i < idGroup.length; i++){
-            builderIdGroup.append(" AND ");
+            builderIdGroup.append(" OR ");
             builderIdGroup.append (idGroup[i]);
         }
-        String qweryTimeStamp = ("SELECT id_group FROM table_group WHERE last_message > ? AND ?;");
+        String s = builderIdGroup.toString();
+        String qweryTimeStamp = ("SELECT id_group FROM table_group WHERE last_message > ? AND id_group = (?);");
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(qweryTimeStamp);
             preparedStatement.setTimestamp(1, lastLogOn);
-            preparedStatement.setString(2, String.valueOf(builderIdGroup));
+            preparedStatement.setString(2, s);
             ResultSet select = preparedStatement.executeQuery();
             while(select.next()){
                 idGroupCheck.add(select.getInt(1));
@@ -239,6 +240,11 @@ public class SQLConnector {
         }catch (SQLException e){
             System.err.println("Класс SQLConnector метод getMessageGroup");
             System.out.println(e);
+        }
+
+        if(idGroupCheck.size() == 0){
+            messageGroup.add("Сообщений нет");
+            return messageGroup;
         }
 
         StringBuilder buildIdLink = new StringBuilder();// Будем собирать строчку из йдишников для таблици group_chat
