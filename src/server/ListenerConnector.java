@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * Класс предусмотрен как точка входа, он запускается и слушает кто подключается
  * Проверка данных и дальнейшее взаимодействие с клиентом происхлдит в других классах.
  */
-public class Connector {
+public class ListenerConnector {
     public static void main(String[] args){
         System.out.println("Server started");
         ServerSocket serv; // Создаём серверный сокет с указанием порта который будет использовать программа.
