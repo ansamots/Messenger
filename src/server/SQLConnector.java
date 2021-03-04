@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class SQLConnector {
     SQLConnector(){
         try{
-            url = "jdbc:mysql://DESKTOP-N1MNM2T:3306/test_db"; // Путь к базе данных
+            url = "jdbc:mysql://127.0.0.1:3306/test_db"; // Путь к базе данных
 //            url = "jdbc:mysql://localhost:3306/test_db";
             login = "admin"; // Логин подключения к базе данных
             password = "Hfleuf"; // Пароль подключения к базе данных
